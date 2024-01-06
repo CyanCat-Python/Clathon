@@ -5,7 +5,7 @@ Before using it,Don't forget to add the Clathon installation directory to PATH!
 Once set up, you can use the clathon command to open the Clathon interactive environment, or run the file with the clathon <file>
 The URL of the Gitee project repository: https://gitee.com/MinePy/clathon
 Repository address: git@gitee.com: MinePy/clathon.git
-Author: Hardy
+Author: Cyan Wolf
 Date: 2024/1/1
 Version: 1.20.2
 Description: Clathon is a Python interpreter written in CPython.
@@ -31,7 +31,7 @@ for i in range(1):
 
         def run(fileObj, comment=True, out=False):
             """Run a Python file."""
-            file = open(fileObj, "a+", encoding="utf-8")
+            file = open(fileObj, "r", encoding="utf-8")
             code = file.read()
             if comment:
                 print(f"File {str(fileObj)} is running")
