@@ -16,7 +16,6 @@ Description: Clathon is a Python interpreter written in CPython.
 # 2. All code must be written in the UTF-8 encoding.
 # 3. The one that starts with "_" is an internal variable (non-constant).
 # 4. Threads that start with "___".
-
 # Preparation
 for i in range(1):
     try:
@@ -162,6 +161,19 @@ Gitee:https://gitee.com/MinePy/clathon"""
                 text = json.dumps({"from": _id_, "text": text})
                 f.write(text)
 
+        #Run files
+        try:
+            if len(sys.argv) >= 2:
+                for file in sys.argv[1:]:
+                    with open(file, "r", encoding="utf-8")as f:
+                        print(f"The file {file} is running...\n")
+                        exec(f.read())
+                sys.exit()
+            else:
+                pass
+        except Exception as error:
+            import traceback
+            print(str(error))
 
 
         # Systems
@@ -195,23 +207,12 @@ This system is used to prevent the id from changing while the program is running
         ___IDSafeSystem___.start()
         ___MessageSystem___.start()
 
-        #Run files
-        """try:
-            if len(sys.argv) >= 2:
-                for file in sys.argv[1:]:
-                    run(file, comment=False)
-                sys.exit()
-            else:
-                pass
-        except Exception as error:
-            print(str(error))"""
     except Exception as ErrorMessage:
         print(ErrorMessage)
 
 if __name__ == "__main__":
     # Import modules
     try:
-
         import math
         import traceback
         import re
@@ -219,15 +220,16 @@ if __name__ == "__main__":
         import webbrowser
         import datetime
         from PIL import Image, ImageDraw, ImageFont
-        import pyperclip
         import pyautogui
         import keyboard
         import easygui
-
-        for module in pyforest.imports:
-            globals()[module] = pyforest.imp(module)
-    except ImportError:
-        pass
+        for i in dir(pyforest):
+            try:
+                exec(f"import {i}")
+            except:
+                pass
+    except ImportError as error:
+        print(error)
     print(f"""Clathon Version {_version_}({_date_}) 64 Bits
 Python Version 3.11.1 Windows
     """)
