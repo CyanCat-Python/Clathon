@@ -213,19 +213,14 @@ if __name__ == "__main__":
     try:
 
         import math
-        print("a")
         import traceback
-        print("a")
         import re
         import requests
         import webbrowser
         import datetime
-        import beautifulsoup4
         from PIL import Image, ImageDraw, ImageFont
-        print("a")
         import pyperclip
         import pyautogui
-        print("a")
         import keyboard
         import easygui
 
