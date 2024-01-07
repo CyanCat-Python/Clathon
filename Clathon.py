@@ -27,12 +27,12 @@ for i in range(1):
         import time, datetime
         import threading
 
-        def run(fileObj, comment=True, out=False):
+        def run(fileObj, comment=False, out=False):
             """Run a Python file."""
             file = open(fileObj, "r", encoding="utf-8")
             code = file.read()
             if comment:
-                print(f"File {str(fileObj)} is running")
+                print(f"=======File {str(fileObj)} is running=======")
             else:
                 pass
             if out:
@@ -88,14 +88,40 @@ Gitee:https://gitee.com/MinePy/clathon"""
             """Requirements for Clathon"""
             def __init__(self):
                 import pyforest
-                try:
-                    for i in dir(pyforest):
-                        try:
-                            exec(f"import {i}")
-                        except:
-                            pass
-                except ImportError as error:
-                    pass
+                import math
+                import re
+                import requests
+                import random
+                import os
+                import time
+                import sys
+                import datetime
+                import json
+                import hashlib
+                import base64
+                import subprocess
+                import threading
+                import urllib.request
+                import urllib.parse
+                import urllib.error
+                import http.client
+                import http.server
+                import socketserver
+                import socket
+                import tkinter
+                import tkinter.messagebox
+                import tkinter.filedialog
+                import tkinter.simpledialog
+                import tkinter.colorchooser
+                import tkinter.ttk
+                import tkinter.constants
+                import tkinter.dnd
+                import tkinter.scrolledtext
+                import tkinter.font
+                import pyautogui
+                import PIL
+                import pathlib
+                from pathlib import Path
 
         def cd(path):
             """Change work directory to <path>"""
@@ -117,7 +143,7 @@ Gitee:https://gitee.com/MinePy/clathon"""
 
         def enter_code():
             """Enter code"""
-            code = easygui.codebox(msg="Enter your code", titile="Clathon CodeBox")
+            code = easygui.codebox(msg="Enter your code", title="Clathon CodeBox")
             if code.isspace():
                 return None
             else:
@@ -168,7 +194,6 @@ Gitee:https://gitee.com/MinePy/clathon"""
             if len(sys.argv) >= 2:
                 for file in sys.argv[1:]:
                     with open(file, "r", encoding="utf-8") as f:
-                        print(f"The file {file} is running...\n")
                         exec(f.read())
                 sys.exit()
             else:

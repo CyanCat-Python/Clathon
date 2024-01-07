@@ -1,0 +1,10 @@
+a752c0f45510d9e92a719f4a141fe7eeb5e38f3b 优化启动速度（将模块引入Requierments类）
+a97538cfdd354d77bf95d4ef753f54c6cb7d000f Update msi file
+e484cef1f66aef8ab43ab274df2d9a616f55dba4 Update msi file
+7784be8d0cbdade2be382f4297bba704d704b0c8 Create install file
+96e020e8e79c44cf1c603ca82ef718af0ec08c3a Clathon setup file
+523b49f49009b90c7138c51dfc3d06682fec937f Clathon can run file
+a06e1e6716fde9b5593f1e81e6007f52c9f92548 Merge branch 'main' of gitee.com:MinePy/clathon
+77f951d74ac6f9b578770bfa0c6a2c87a238f6a6 OFF DEBUG
+ce64b64f178affba0b3980e5c8b502d076aff4bb add LICENSE.
+112ecc2ff5a15f631089ee169dcb69a385a8271d Start

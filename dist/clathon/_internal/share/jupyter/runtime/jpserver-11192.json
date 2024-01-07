@@ -1,0 +1,13 @@
+{
+  "base_url": "/",
+  "hostname": "localhost",
+  "password": false,
+  "pid": 11192,
+  "port": 8888,
+  "root_dir": "C:\\Users\\TTLL\\Desktop",
+  "secure": false,
+  "sock": "",
+  "token": "efd40773c54d621a6ef0d850e12090004671de18c49e9093",
+  "url": "http://localhost:8888/",
+  "version": "2.10.1"
+}
