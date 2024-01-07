@@ -20,13 +20,11 @@ Description: Clathon is a Python interpreter written in CPython.
 for i in range(1):
     try:
         import json
-        import pyforest
-
         from pathlib import Path
         import sys
         import os
         import turtle, random
-        import time
+        import time, datetime
         import threading
 
         def run(fileObj, comment=True, out=False):
@@ -42,25 +40,26 @@ for i in range(1):
             else:
                 exec(code)
 
-
         def getData(fileObj):
             """Get data from a JSON file."""
             with open(fileObj, "r", encoding="utf-8") as file:
                 data = json.load(file)
                 return data
 
-
         # Values
         _prompt_ = "Command>>"
         _put_ = ""
         IDRANGE, IDLIST = 999, []
         _active_ = True
-        _configObj_ = getData(os.environ["USERPROFILE"] + "\\AppData\\Local\\Programs\\config.json")
+        _configObj_ = getData(
+            os.environ["USERPROFILE"] + "\\config.json"
+        )
         _config_path_ = _configObj_["config_path"]
         _ErrorTries_ = 0
+        _msg_dict_ = {}
         _KeyWord_ = "$"
         _ConfigCode_ = ""
-        with open(_config_path_,'r',encoding='utf-8')as f:
+        with open(_config_path_, "r", encoding="utf-8") as f:
             _ConfigCode_ = f.read()
         del f
         exec(_ConfigCode_)
@@ -85,37 +84,44 @@ Gitee:https://gitee.com/MinePy/clathon"""
             else:
                 print(msg)
 
+        class Requirements:
+            """Requirements for Clathon"""
+            def __init__(self):
+                import pyforest
+                try:
+                    for i in dir(pyforest):
+                        try:
+                            exec(f"import {i}")
+                        except:
+                            pass
+                except ImportError as error:
+                    pass
 
         def cd(path):
             """Change work directory to <path>"""
             os.chdir(path)
 
-
         def cls():
             """Clear the terminal screen"""
             os.system("cls")
-
 
         def exit(status_code=0):
             """Exit Clathon
             Alias of quit()"""
             os._exit(status_code)
 
-
         def quit(status_code=0):
             """Exit Clathon
             Alias of exit()"""
             os._exit(status_code)
 
-
         def enter_code():
             """Enter code"""
-            code = easygui.codebox(msg="Enter your code", titile="Clathon CodeBox", )
+            code = easygui.codebox(msg="Enter your code", titile="Clathon CodeBox")
             if code.isspace():
                 return None
             else:
                 exec(code)
-
 
         def crash(limit=9999999):
             """Crash the Clathon"""
@@ -125,7 +131,6 @@ Gitee:https://gitee.com/MinePy/clathon"""
 
             sys.setrecursionlimit(int(limit))
             stack()
-
 
         def ifType(aObj, bObj):
             """Check if aObj is type of bObj"""
@@ -140,7 +145,6 @@ Gitee:https://gitee.com/MinePy/clathon"""
                     time.sleep(0.5)
                     cls()
 
-
         def lock():
             """Lock a moment until user press Ctrl+C"""
             while True:
@@ -149,23 +153,21 @@ Gitee:https://gitee.com/MinePy/clathon"""
                 except:
                     break
 
-
         def title(text):
             """Set the terminal title"""
             os.system(f"title {text}")
 
-
-        def send(text):
+        def send(text=""):
             """Send message"""
             with open("clathon_message", "w", encoding="utf-8") as f:
                 text = json.dumps({"from": _id_, "text": text})
                 f.write(text)
 
-        #Run files
+        # Run files
         try:
             if len(sys.argv) >= 2:
                 for file in sys.argv[1:]:
-                    with open(file, "r", encoding="utf-8")as f:
+                    with open(file, "r", encoding="utf-8") as f:
                         print(f"The file {file} is running...\n")
                         exec(f.read())
                 sys.exit()
@@ -173,26 +175,28 @@ Gitee:https://gitee.com/MinePy/clathon"""
                 pass
         except Exception as error:
             import traceback
-            print(str(error))
 
+            print(str(error))
 
         # Systems
         def ___msg_system___():
             """Message systemListen to the message file and send it to the corresponding function"""
             import json
+
             while _active_:
                 try:
                     with open("clathon_message", "r", encoding="utf-8") as f:
                         textObj = json.loads(f.read())
+                        dtime = datetime.datetime.now().strftime("%H:%M:%S")# %Y/%m/%d
                         fid = textObj["from"]
                         text = textObj["text"]
+                        _msg_dict_[dtime] = text
                         print(f"\nFrom:{fid}")
                         print(f"Text:{text}\n")
                     os.system("del -r clathon_message")
                 except:
                     pass
                 time.sleep(0.1)
-
 
         def ___id_safe_system___():
             """Id safe system
@@ -202,6 +206,7 @@ This system is used to prevent the id from changing while the program is running
             while _active_:
                 if _id_ != backup_id:
                     _id_ = backup_id
+
         ___IDSafeSystem___ = threading.Thread(target=___id_safe_system___)
         ___MessageSystem___ = threading.Thread(target=___msg_system___)
         ___IDSafeSystem___.start()
@@ -213,31 +218,19 @@ This system is used to prevent the id from changing while the program is running
 if __name__ == "__main__":
     # Import modules
     try:
-        import math
-        import traceback
-        import re
-        import requests
-        import webbrowser
-        import datetime
-        from PIL import Image, ImageDraw, ImageFont
-        import pyautogui
-        import keyboard
         import easygui
-        for i in dir(pyforest):
-            try:
-                exec(f"import {i}")
-            except:
-                pass
-    except ImportError as error:
-        print(error)
-    print(f"""Clathon Version {_version_}({_date_}) 64 Bits
+        import traceback
+    except:
+        pass
+    print(
+        f"""Clathon Version {_version_}({_date_}) 64 Bits
 Python Version 3.11.1 Windows
-    """)
+    """
+    )
     while _active_:
         try:
             _put_ = input(_prompt_)
-            if _put_ == "exit" \
-                    or _put_ == "quit":
+            if _put_ == "exit" or _put_ == "quit":
                 exit(0)
             elif _put_.startswith(_KeyWord_):
                 os.system(_put_[1:])
@@ -248,7 +241,7 @@ Python Version 3.11.1 Windows
                 while _block_active_:
                     _block_put_ = input()
                     _block_code_ += "\n" + _block_put_
-                    if _block_put_.isspace():
+                    if (_block_put_.startswith(' ') and _block_put_.endswith(' ')) or _block_put_ == "":
                         break
                 exec(_block_code_)
             else:
@@ -258,4 +251,4 @@ Python Version 3.11.1 Windows
         except:
             _error_ = traceback.format_exc().split("\n")
             del _error_[1]
-            print('\n'.join(_error_))
+            print("\n".join(_error_))
