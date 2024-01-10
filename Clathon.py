@@ -189,20 +189,6 @@ Gitee:https://gitee.com/MinePy/clathon"""
                 text = json.dumps({"from": _id_, "text": text})
                 f.write(text)
 
-        # Run files
-        try:
-            if len(sys.argv) >= 2:
-                for file in sys.argv[1:]:
-                    with open(file, "r", encoding="utf-8") as f:
-                        exec(f.read())
-                sys.exit()
-            else:
-                pass
-        except Exception as error:
-            import traceback
-
-            print(str(error))
-
         # Systems
         def ___msg_system___():
             """Message systemListen to the message file and send it to the corresponding function"""
@@ -237,13 +223,29 @@ This system is used to prevent the id from changing while the program is running
         ___IDSafeSystem___.start()
         ___MessageSystem___.start()
 
+        for k, v in _configObj_.items():
+            globals()[k] = v
+        
+        # Run files
+        try:
+            if len(sys.argv) >= 2:
+                for file in sys.argv[1:]:
+                    with open(file, "r", encoding="utf-8") as f:
+                        exec(f.read())
+                sys.exit()
+            else:
+                pass
+        except Exception as error:
+            import traceback
+
+            print(str(error))
     except Exception as ErrorMessage:
         print(ErrorMessage)
 
 if __name__ == "__main__":
     # Import modules
     try:
-        import easygui
+        import easygui, pprint
         import traceback
     except:
         pass
@@ -255,8 +257,12 @@ Python Version 3.11.1 Windows
     while _active_:
         try:
             _put_ = input(_prompt_)
+            _is_value_ = globals().get(_put_, False)
             if _put_ == "exit" or _put_ == "quit":
                 exit(0)
+            elif _is_value_:
+                _value_print_ = pprint.pformat(globals()[_put_])
+                print(_value_print_)
             elif _put_.startswith(_KeyWord_):
                 os.system(_put_[1:])
             elif _put_.endswith(":"):
