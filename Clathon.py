@@ -258,11 +258,21 @@ Python Version 3.11.1 Windows
         try:
             _put_ = input(_prompt_)
             _is_value_ = globals().get(_put_, False)
+            
+            try:
+                eval(_put_)
+            except:
+                _v_ = False
+            else:
+                _is_value_ = eval(_put_)
+
             if _put_ == "exit" or _put_ == "quit":
                 exit(0)
             elif _is_value_:
-                _value_print_ = pprint.pformat(globals()[_put_])
+                _value_print_ = pprint.pformat(_is_value_)
+                del _is_value_
                 print(_value_print_)
+                del _value_print_
             elif _put_.startswith(_KeyWord_):
                 os.system(_put_[1:])
             elif _put_.endswith(":"):
