@@ -26,19 +26,6 @@ for i in range(1):
         import random
         import time, datetime
         import threading
-        if len(sys.argv) >= 2:
-            if sys.argv[1].startswith("-"):
-                for key in list(sys.argv[1]):
-                    key = key.upper()
-                    if key == "F":
-                        _fast_ = True
-                    elif key == "O":
-                        _shell_ = True
-                        for op in sys.argv[2:]:
-                            option, value = op.split("=")
-                            globals()[option] = value
-                        del op, option, value
-            del key
         def run(fileObj, comment=False, out=False):
             """Run a Python file."""
             file = open(fileObj, "r", encoding="utf-8")
