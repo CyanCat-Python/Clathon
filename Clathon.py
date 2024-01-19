@@ -26,6 +26,7 @@ for i in range(1):
         import random
         import time, datetime
         import threading
+
         def run(fileObj, comment=False, out=False):
             """Run a Python file."""
             file = open(fileObj, "r", encoding="utf-8")
@@ -46,13 +47,11 @@ for i in range(1):
                 return data
 
         # Values
-        _prompt_ = "Command>>"
+        _prompt_ = ""
         _put_ = ""
         IDRANGE, IDLIST = 999, []
         _active_ = True
-        _configObj_ = getData(
-            os.environ["USERPROFILE"] + "\\config.json"
-        )
+        _configObj_ = getData(os.environ["USERPROFILE"] + "\\config.json")
         _config_path_ = _configObj_["config_path"]
         _ErrorTries_ = 0
         _msg_dict_ = {}
@@ -85,6 +84,7 @@ Gitee:https://gitee.com/MinePy/clathon"""
 
         class Requirements:
             """Requirements for Clathon"""
+
             def __init__(self):
                 import pyforest
                 import math
@@ -140,10 +140,10 @@ Gitee:https://gitee.com/MinePy/clathon"""
             Alias of exit()"""
             os._exit(status_code)
 
-        def enter_code():
+        def codebox():
             """Enter code"""
             code = easygui.codebox(msg="Enter your code", title="Clathon CodeBox")
-            if code.isspace():
+            if code == "":
                 return None
             else:
                 exec(code)
@@ -197,7 +197,7 @@ Gitee:https://gitee.com/MinePy/clathon"""
                 try:
                     with open("clathon_message", "r", encoding="utf-8") as f:
                         textObj = json.loads(f.read())
-                        dtime = datetime.datetime.now().strftime("%H:%M:%S")# %Y/%m/%d
+                        dtime = datetime.datetime.now().strftime("%H:%M:%S")  # %Y/%m/%d
                         fid = textObj["from"]
                         text = textObj["text"]
                         _msg_dict_[dtime] = text
@@ -224,7 +224,7 @@ This system is used to prevent the id from changing while the program is running
 
         for k, v in _configObj_.items():
             globals()[k] = v
-        
+
         # Run files
         try:
             if len(sys.argv) >= 2:
@@ -245,7 +245,7 @@ if __name__ == "__main__":
     # Import modules
     try:
         import easygui, pprint
-        import traceback
+        import traceback, pyautogui
     except:
         pass
     print(
@@ -253,11 +253,14 @@ if __name__ == "__main__":
 Python Version 3.11.1 Windows
     """
     )
+    _line_ = 0
+    In = []
     while _active_:
         try:
+            _prompt_ = f"In [{str(_line_).rjust(2)}]>"
             _put_ = input(_prompt_)
             _is_value_ = globals().get(_put_, False)
-            
+
             try:
                 eval(_put_)
             except:
@@ -274,21 +277,33 @@ Python Version 3.11.1 Windows
                 del _value_print_
             elif _put_.startswith(_KeyWord_):
                 os.system(_put_[1:])
+            elif _put_.startswith("?"):
+                exec(f"help({_put_[1:]})")
             elif _put_.endswith(":"):
                 _block_code_ = ""
                 _block_code_ += _put_
                 _block_active_ = True
                 while _block_active_:
-                    _block_put_ = input()
+                    pyautogui.press("\t");_block_put_ = input()
                     _block_code_ += "\n" + _block_put_
-                    if (_block_put_.startswith(' ') and _block_put_.endswith(' ')) or _block_put_ == "":
+                    if (
+                        _block_put_.startswith(" ") and _block_put_.endswith(" ")
+                    ) or _block_put_ == "":
                         break
                 exec(_block_code_)
             else:
+                if (
+                        _put_.startswith(" ") and _put_.endswith(" ")
+                    ) or _put_ == "":
+                    continue
                 exec(_put_)
+            In.append(_put_)
+            _line_ += 1
         except KeyboardInterrupt:
             cls()
         except:
             _error_ = traceback.format_exc().split("\n")
             del _error_[1]
+            In.append(_put_)
+            _line_ += 1
             print("\n".join(_error_))
