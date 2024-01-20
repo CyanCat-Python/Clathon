@@ -1,8 +1,11 @@
 # -- coding: utf-8 --**
-"""Clathon is a Python interpreter written in CPython. There are a lot of functions added to it (i.e. writing a Python in Python, and I was blown away by the implementation)
+"""Clathon is a Python interpreter written in CPython. \
+There are a lot of functions added to it (i.e. writing \
+a Python in Python, and I was blown away by the implementation)
 Setup and Usage:
 Before using it,Don't forget to add the Clathon installation directory to PATH!
-Once set up, you can use the clathon command to open the Clathon interactive environment, or run the file with the clathon <file>
+Once set up, you can use the clathon command to open the \
+Clathon interactive environment, or run the file with the clathon <file>
 The URL of the Gitee project repository: https://gitee.com/MinePy/clathon
 Repository address: git@gitee.com: MinePy/clathon.git
 Author: Cyan Wolf
@@ -20,11 +23,11 @@ Description: Clathon is a Python interpreter written in CPython.
 for i in range(1):
     try:
         import json
-        from pathlib import Path
         import sys
         import os
         import random
-        import time, datetime
+        import time
+        import datetime
         import threading
 
         def run(fileObj, comment=False, out=False):
@@ -82,45 +85,45 @@ Gitee:https://gitee.com/MinePy/clathon"""
             else:
                 print(msg)
 
-        class Requirements:
-            """Requirements for Clathon"""
+        # class Requirements:
+        #     """Requirements for Clathon"""
 
-            def __init__(self):
-                import pyforest
-                import math
-                import re
-                import requests
-                import random
-                import os
-                import time
-                import sys
-                import datetime
-                import json
-                import hashlib
-                import base64
-                import subprocess
-                import threading
-                import urllib.request
-                import urllib.parse
-                import urllib.error
-                import http.client
-                import http.server
-                import socketserver
-                import socket
-                import tkinter
-                import tkinter.messagebox
-                import tkinter.filedialog
-                import tkinter.simpledialog
-                import tkinter.colorchooser
-                import tkinter.ttk
-                import tkinter.constants
-                import tkinter.dnd
-                import tkinter.scrolledtext
-                import tkinter.font
-                import pyautogui
-                import PIL
-                import pathlib
-                from pathlib import Path
+        #     def __init__(self):
+        #         import pyforest
+        #         import math
+        #         import re
+        #         import requests
+        #         import random
+        #         import os
+        #         import time
+        #         import sys
+        #         import datetime
+        #         import json
+        #         import hashlib
+        #         import base64
+        #         import subprocess
+        #         import threading
+        #         import urllib.request
+        #         import urllib.parse
+        #         import urllib.error
+        #         import http.client
+        #         import http.server
+        #         import socketserver
+        #         import socket
+        #         import tkinter
+        #         import tkinter.messagebox
+        #         import tkinter.filedialog
+        #         import tkinter.simpledialog
+        #         import tkinter.colorchooser
+        #         import tkinter.ttk
+        #         import tkinter.constants
+        #         import tkinter.dnd
+        #         import tkinter.scrolledtext
+        #         import tkinter.font
+        #         import pyautogui
+        #         import PIL
+        #         import pathlib
+        #         from pathlib import Path
 
         def cd(path):
             """Change work directory to <path>"""
@@ -139,14 +142,6 @@ Gitee:https://gitee.com/MinePy/clathon"""
             """Exit Clathon
             Alias of exit()"""
             os._exit(status_code)
-
-        def codebox():
-            """Enter code"""
-            code = easygui.codebox(msg="Enter your code", title="Clathon CodeBox")
-            if code == "":
-                return None
-            else:
-                exec(code)
 
         def crash(limit=9999999):
             """Crash the Clathon"""
@@ -175,7 +170,7 @@ Gitee:https://gitee.com/MinePy/clathon"""
             while True:
                 try:
                     cls()
-                except:
+                except KeyboardInterrupt:
                     break
 
         def title(text):
@@ -190,27 +185,29 @@ Gitee:https://gitee.com/MinePy/clathon"""
 
         # Systems
         def ___msg_system___():
-            """Message systemListen to the message file and send it to the corresponding function"""
+            """Message systemListen to the message file \
+            and send it to the corresponding function"""
             import json
 
             while _active_:
                 try:
                     with open("clathon_message", "r", encoding="utf-8") as f:
                         textObj = json.loads(f.read())
-                        dtime = datetime.datetime.now().strftime("%H:%M:%S")  # %Y/%m/%d
+                        dtime = datetime.datetime.now().strftime("%H:%M:%S")
                         fid = textObj["from"]
                         text = textObj["text"]
                         _msg_dict_[dtime] = text
                         print(f"\nFrom:{fid}")
                         print(f"Text:{text}\n")
                     os.system("del -r clathon_message")
-                except:
+                except FileNotFoundError:
                     pass
                 time.sleep(0.1)
 
         def ___id_safe_system___():
             """Id safe system
-This system is used to prevent the id from changing while the program is running."""
+This system is used to prevent the id from changing while \
+the program is running."""
             global _id_
             backup_id = _id_
             while _active_:
@@ -244,9 +241,10 @@ This system is used to prevent the id from changing while the program is running
 if __name__ == "__main__":
     # Import modules
     try:
-        import easygui, pprint
-        import traceback, pyautogui
-    except:
+        import pprint
+        import traceback
+        import pyautogui
+    except ImportError:
         pass
     print(
         f"""Clathon Version {_version_}({_date_}) 64 Bits
@@ -263,7 +261,7 @@ Python Version 3.11.1 Windows
 
             try:
                 eval(_put_)
-            except:
+            except SyntaxError:
                 _v_ = False
             else:
                 _is_value_ = eval(_put_)
@@ -284,7 +282,8 @@ Python Version 3.11.1 Windows
                 _block_code_ += _put_
                 _block_active_ = True
                 while _block_active_:
-                    pyautogui.press("\t");_block_put_ = input()
+                    pyautogui.press("\t")
+                    _block_put_ = input()
                     _block_code_ += "\n" + _block_put_
                     if (
                         _block_put_.startswith(" ") and _block_put_.endswith(" ")
@@ -292,16 +291,14 @@ Python Version 3.11.1 Windows
                         break
                 exec(_block_code_)
             else:
-                if (
-                        _put_.startswith(" ") and _put_.endswith(" ")
-                    ) or _put_ == "":
+                if (_put_.startswith(" ") and _put_.endswith(" ")) or _put_ == "":
                     continue
                 exec(_put_)
             In.append(_put_)
             _line_ += 1
         except KeyboardInterrupt:
             cls()
-        except:
+        except Exception as _error_:
             _error_ = traceback.format_exc().split("\n")
             del _error_[1]
             In.append(_put_)
