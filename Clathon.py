@@ -201,8 +201,8 @@ def main():
     except ImportError:
         pass
     print(
-        f"""Clathon Shell版本 {_version_}({_date_}) 64 Bits
-Python规范版本:3.11.1
+        f"""Clathon版本 {_version_}({_date_}) 64 Bits
+Python规范版本:3.11.1 on Windows win32
     """
     )
     _line_ = 0

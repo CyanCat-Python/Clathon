@@ -1,4 +1,4 @@
-('H:\\Clathon\\build\\clathon\\PYZ-00.pyz',
+('H:\\Clathon\\build\\Clathon\\PYZ-00.pyz',
  [('PIL', 'H:\\Python\\Lib\\site-packages\\PIL\\__init__.py', 'PYMODULE'),
   ('PIL.BlpImagePlugin',
    'H:\\Python\\Lib\\site-packages\\PIL\\BlpImagePlugin.py',
