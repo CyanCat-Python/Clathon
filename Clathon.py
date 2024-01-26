@@ -6,8 +6,8 @@ Setup and Usage:
 Before using it,Don't forget to add the Clathon installation directory to PATH!
 Once set up, you can use the clathon command to open the \
 Clathon interactive environment, or run the file with the clathon <file>
-The URL of the Gitee project repository: https://gitee.com/MinePy/clathon
-Repository address: git@gitee.com: MinePy/clathon.git
+The URL of the Gitee project repository: https://gitee.com/HardyProjects/clathon
+Repository address: git@gitee.com: HardyProjects/clathon.git
 Author: Cyan Wolf
 Date: 2024/1/1
 Version: 1.20.2
@@ -52,7 +52,7 @@ for i in range(1):
         # Values
         _prompt_ = ""
         _put_ = ""
-        IDRANGE, IDLIST = 999, []
+        IDRANGE, IDLIST = 5, []
         _active_ = True
         _configObj_ = getData(os.environ["USERPROFILE"] + "\\config.json")
         _config_path_ = _configObj_["config_path"]
@@ -63,15 +63,9 @@ for i in range(1):
         with open(_config_path_, "r", encoding="utf-8") as f:
             _ConfigCode_ = f.read()
         del f
-        exec(_ConfigCode_)
         _date_ = "2024 New Year"
         _version_ = "1.20.2"
         _id_ = 0
-        for num in range(IDRANGE):
-            add = str(num * 2)
-            IDLIST.append(add)
-        _id_ = id(random.choice(IDLIST))
-        del num, add, IDLIST, IDRANGE
 
         # Functions
         def about(returns=False):
@@ -79,7 +73,7 @@ for i in range(1):
             msg = f"""Clathon Version {_version_}({_date_})
 Work And Edit with : Python 3.11.1 Windows
 Author : Hardy 2861205314@qq.com
-Gitee:https://gitee.com/MinePy/clathon"""
+Gitee:https://gitee.com/HardyProjects/clathon"""
             if not returns:
                 return msg
             else:
@@ -221,7 +215,14 @@ the program is running."""
 
         for k, v in _configObj_.items():
             globals()[k] = v
-
+        
+        for num in range(IDRANGE):
+            add = str(num * 2)
+            IDLIST.append(add)
+        _id_ = id(random.choice(IDLIST))
+        del num, add, IDLIST, IDRANGE
+        exec(_ConfigCode_)
+        
         # Run files
         try:
             if len(sys.argv) >= 2:
@@ -232,8 +233,6 @@ the program is running."""
             else:
                 pass
         except Exception as error:
-            import traceback
-
             print(str(error))
     except Exception as ErrorMessage:
         print(ErrorMessage)
@@ -241,9 +240,9 @@ the program is running."""
 
 def main():
     try:
-        import pprint
-        import traceback
-        import pyautogui
+        from pyautogui import press
+        from pprint import pformat
+        from traceback import format_exc as msg_err
     except ImportError:
         pass
     print(
@@ -255,7 +254,7 @@ Python Version 3.11.1 Windows
     In = []
     while _active_:
         try:
-            _p rompt_ = f"In [{str(_line_).rjust(2)}]>"
+            _prompt_ = f"In [{str(_line_).rjust(2)}]>"
             _put_ = input(_prompt_)
             _is_value_ = globals().get(_put_, False)
 
@@ -269,7 +268,7 @@ Python Version 3.11.1 Windows
             if _put_ == "exit" or _put_ == "quit":
                 exit(0)
             elif _is_value_:
-                _value_print_ = pprint.pformat(_is_value_)
+                _value_print_ = pformat(_is_value_)
                 del _is_value_
                 print(_value_print_)
                 del _value_print_
@@ -282,7 +281,7 @@ Python Version 3.11.1 Windows
                 _block_code_ += _put_
                 _block_active_ = True
                 while _block_active_:
-                    pyautogui.press("\t")
+                    press("\t")
                     _block_put_ = input()
                     _block_code_ += "\n" + _block_put_
                     if (
@@ -296,9 +295,9 @@ Python Version 3.11.1 Windows
                 exec(_put_)
             In.append(_put_)
         except KeyboardInterrupt:
-            cls()
+            print("User Interrupted")
         except Exception as _error_:
-            _error_ = traceback.format_exc().split("\n")
+            _error_ = msg_err().split("\n")
             del _error_[1]
             In.append(_put_)
             _line_ += 1
