@@ -1,25 +1,18 @@
 # -- coding: utf-8 --**
-"""Clathon is a Python interpreter written in CPython. \
-There are a lot of functions added to it (i.e. writing \
-a Python in Python, and I was blown away by the implementation)
-Setup and Usage:
-Before using it,Don't forget to add the Clathon installation directory to PATH!
-Once set up, you can use the clathon command to open the \
-Clathon interactive environment, or run the file with the clathon <file>
-The URL of the Gitee project repository: https://gitee.com/HardyProjects/clathon
-Repository address: git@gitee.com: HardyProjects/clathon.git
-Author: Cyan Wolf
-Date: 2024/1/1
-Version: 1.20.2
-Description: Clathon is a Python interpreter written in CPython.
+"""Clathon 是一个用 CPython 编写的 Python 解释器。它添加了很多功能(即编写
+Python 中的 Python，我被实现震撼了)
+设置和使用:
+使用前，别忘了将Clathon安装目录添加到PATH中!
+设置完成后，您可以使用 clathon 命令打开 
+Clathon 交互式环境，或使用 clathon <file>运行文件
+Gitee 项目仓库的 URL:https://gitee.com/HardyProjects/clathon
+仓库地址:git@gitee.com:HardyProjects/clathon.git
+作者： Cyan Wolf
+日期:2024/1/1
+版本: 1.20.4
+描述:Clathon 是用 CPython 编写的 Python 解释器。
 """
 
-# Code Specification:
-# 1. All code must be written in the Python 3.11.10 standard.
-# 2. All code must be written in the UTF-8 encoding.
-# 3. The one that starts with "_" is an internal variable (non-constant).
-# 4. Threads that start with "___".
-# Preparation
 for i in range(1):
     try:
         import json
@@ -30,26 +23,12 @@ for i in range(1):
         import datetime
         import threading
 
-        def run(fileObj, comment=False, out=False):
-            """Run a Python file."""
-            file = open(fileObj, "r", encoding="utf-8")
-            code = file.read()
-            if comment:
-                print(f"======= File {str(fileObj)} is running =======")
-            else:
-                pass
-            if out:
-                return code
-            else:
-                exec(code)
-
         def getData(fileObj):
-            """Get data from a JSON file."""
+            """获取JSON文件中的数据"""
             with open(fileObj, "r", encoding="utf-8") as file:
                 data = json.load(file)
                 return data
 
-        # Values
         _prompt_ = ""
         _put_ = ""
         IDRANGE, IDLIST = 5, []
@@ -63,16 +42,15 @@ for i in range(1):
         with open(_config_path_, "r", encoding="utf-8") as f:
             _ConfigCode_ = f.read()
         del f
-        _date_ = "2024 New Year"
-        _version_ = "1.20.2"
+        _date_ = "2024 1.26"
+        _version_ = "1.20.4"
         _id_ = 0
 
-        # Functions
         def about(returns=False):
-            """Display information about Clathon"""
+            """显示Clathon的相关信息"""
             msg = f"""Clathon Version {_version_}({_date_})
-Work And Edit with : Python 3.11.1 Windows
-Author : Hardy 2861205314@qq.com
+Python�汾:Python 3.11.1 Windows
+����:Hardy 2861205314@qq.com
 Gitee:https://gitee.com/HardyProjects/clathon"""
             if not returns:
                 return msg
@@ -80,8 +58,8 @@ Gitee:https://gitee.com/HardyProjects/clathon"""
                 print(msg)
 
         # class Requirements:
-        #     """Requirements for Clathon"""
-
+        #     """cx-freeze打包时一同打包的库
+        #        仅在cx-freeze打包时启用,使用Pyinstaller打包时请将其注释掉"""
         #     def __init__(self):
         #         import pyforest
         #         import math
@@ -120,25 +98,23 @@ Gitee:https://gitee.com/HardyProjects/clathon"""
         #         from pathlib import Path
 
         def cd(path):
-            """Change work directory to <path>"""
+            """更改工作目录至<path>参数"""
             os.chdir(path)
 
         def cls():
-            """Clear the terminal screen"""
+            """清空终端"""
             os.system("cls")
 
         def exit(status_code=0):
-            """Exit Clathon
-            Alias of quit()"""
+            """退出"""
             os._exit(status_code)
 
         def quit(status_code=0):
-            """Exit Clathon
-            Alias of exit()"""
+            """退出"""
             os._exit(status_code)
 
         def crash(limit=9999999):
-            """Crash the Clathon"""
+            """使用栈溢出引发人为崩溃(非必要不要使用!)"""
 
             def stack():
                 stack()
@@ -147,40 +123,22 @@ Gitee:https://gitee.com/HardyProjects/clathon"""
             stack()
 
         def ifType(aObj, bObj):
-            """Check if aObj is type of bObj"""
+            """检查a的类型是b的类型"""
             return type(aObj) == type(bObj)
 
-        def load(symbol="-", times=10):
-            """Loading a moment"""
-            for i in range(times):
-                for j in range(4):
-                    print("Loading" + f"{'.' * i}")
-                    print(f"{symbol * i}")
-                    time.sleep(0.5)
-                    cls()
-
-        def lock():
-            """Lock a moment until user press Ctrl+C"""
-            while True:
-                try:
-                    cls()
-                except KeyboardInterrupt:
-                    break
-
         def title(text):
-            """Set the terminal title"""
+            """设置终端的标题"""
             os.system(f"title {text}")
 
         def send(text=""):
-            """Send message"""
+            """发送消息(依赖msg_system)"""
             with open("clathon_message", "w", encoding="utf-8") as f:
                 text = json.dumps({"from": _id_, "text": text})
                 f.write(text)
 
         # Systems
         def ___msg_system___():
-            """Message systemListen to the message file \
-            and send it to the corresponding function"""
+            """监听目录下的clathon_message文件并将其信息打印至屏幕上"""
             import json
 
             while _active_:
@@ -191,17 +149,15 @@ Gitee:https://gitee.com/HardyProjects/clathon"""
                         fid = textObj["from"]
                         text = textObj["text"]
                         _msg_dict_[dtime] = text
-                        print(f"\nFrom:{fid}")
-                        print(f"Text:{text}\n")
+                        print(f"\n来自:{fid}")
+                        print(f"信息:{text}\n")
                     os.system("del -r clathon_message")
                 except FileNotFoundError:
                     pass
                 time.sleep(0.1)
 
         def ___id_safe_system___():
-            """Id safe system
-This system is used to prevent the id from changing while \
-the program is running."""
+            """保证_id_变量为常量,无法被修改"""
             global _id_
             backup_id = _id_
             while _active_:
@@ -222,8 +178,7 @@ the program is running."""
         _id_ = id(random.choice(IDLIST))
         del num, add, IDLIST, IDRANGE
         exec(_ConfigCode_)
-        
-        # Run files
+
         try:
             if len(sys.argv) >= 2:
                 for file in sys.argv[1:]:
@@ -246,8 +201,8 @@ def main():
     except ImportError:
         pass
     print(
-        f"""Clathon Version {_version_}({_date_}) 64 Bits
-Python Version 3.11.1 Windows
+        f"""Clathon Shell版本 {_version_}({_date_}) 64 Bits
+Python规范版本:3.11.1
     """
     )
     _line_ = 0
@@ -294,8 +249,6 @@ Python Version 3.11.1 Windows
                     continue
                 exec(_put_)
             In.append(_put_)
-        except KeyboardInterrupt:
-            print("User Interrupted")
         except Exception as _error_:
             _error_ = msg_err().split("\n")
             del _error_[1]
