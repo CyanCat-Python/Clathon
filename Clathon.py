@@ -238,8 +238,8 @@ the program is running."""
     except Exception as ErrorMessage:
         print(ErrorMessage)
 
-if __name__ == "__main__":
-    # Import modules
+
+def main():
     try:
         import pprint
         import traceback
@@ -255,7 +255,7 @@ Python Version 3.11.1 Windows
     In = []
     while _active_:
         try:
-            _prompt_ = f"In [{str(_line_).rjust(2)}]>"
+            _p rompt_ = f"In [{str(_line_).rjust(2)}]>"
             _put_ = input(_prompt_)
             _is_value_ = globals().get(_put_, False)
 
@@ -295,7 +295,6 @@ Python Version 3.11.1 Windows
                     continue
                 exec(_put_)
             In.append(_put_)
-            _line_ += 1
         except KeyboardInterrupt:
             cls()
         except Exception as _error_:
@@ -304,3 +303,6 @@ Python Version 3.11.1 Windows
             In.append(_put_)
             _line_ += 1
             print("\n".join(_error_))
+
+if __name__ == "__main__":
+    main()
