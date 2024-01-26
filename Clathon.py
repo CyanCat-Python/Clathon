@@ -216,7 +216,7 @@ Python规范版本:3.11.1 on Windows win32
             try:
                 eval(_put_)
             except SyntaxError:
-                _v_ = False
+                pass
             else:
                 _is_value_ = eval(_put_)
 
@@ -248,6 +248,7 @@ Python规范版本:3.11.1 on Windows win32
                 if (_put_.startswith(" ") and _put_.endswith(" ")) or _put_ == "":
                     continue
                 exec(_put_)
+            _line_ += 1
             In.append(_put_)
         except Exception as _error_:
             _error_ = msg_err().split("\n")
