@@ -15,18 +15,18 @@ Gitee 项目仓库的 URL:https://gitee.com/HardyProjects/clathon
 
 for i in range(1):
     try:
-        import json
-        import sys
+        from json import load, loads, dump, dumps
+        from sys import argv, setrecursionlimit, exit
         import os
-        import random
-        import time
-        import datetime
-        import threading
+        from time import sleep
+        from random import choice
+        from datetime import datetime
+        from threading import Thread
 
         def getData(fileObj):
             """获取JSON文件中的数据"""
             with open(fileObj, "r", encoding="utf-8") as file:
-                data = json.load(file)
+                data = load(file)
                 return data
 
         _prompt_ = ""
@@ -46,16 +46,13 @@ for i in range(1):
         _version_ = "1.20.4"
         _id_ = 0
 
-        def about(returns=False):
+        def about():
             """显示Clathon的相关信息"""
             msg = f"""Clathon Version {_version_}({_date_})
-Python�汾:Python 3.11.1 Windows
-����:Hardy 2861205314@qq.com
-Gitee:https://gitee.com/HardyProjects/clathon"""
-            if not returns:
-                return msg
-            else:
-                print(msg)
+Python版本:Python 3.11.1 Windows
+作者:Hardy 2861205314@qq.com
+Gitee地址:https://gitee.com/HardyProjects/clathon"""
+            print(msg)
 
         # class Requirements:
         #     """cx-freeze打包时一同打包的库
@@ -119,7 +116,7 @@ Gitee:https://gitee.com/HardyProjects/clathon"""
             def stack():
                 stack()
 
-            sys.setrecursionlimit(int(limit))
+            setrecursionlimit(int(limit))
             stack()
 
         def ifType(aObj, bObj):
@@ -133,18 +130,16 @@ Gitee:https://gitee.com/HardyProjects/clathon"""
         def send(text=""):
             """发送消息(依赖msg_system)"""
             with open("clathon_message", "w", encoding="utf-8") as f:
-                text = json.dumps({"from": _id_, "text": text})
+                text = dumps({"from": _id_, "text": text})
                 f.write(text)
 
         # Systems
         def ___msg_system___():
             """监听目录下的clathon_message文件并将其信息打印至屏幕上"""
-            import json
-
             while _active_:
                 try:
                     with open("clathon_message", "r", encoding="utf-8") as f:
-                        textObj = json.loads(f.read())
+                        textObj = loads(f.read())
                         dtime = datetime.datetime.now().strftime("%H:%M:%S")
                         fid = textObj["from"]
                         text = textObj["text"]
@@ -154,7 +149,7 @@ Gitee:https://gitee.com/HardyProjects/clathon"""
                     os.system("del -r clathon_message")
                 except FileNotFoundError:
                     pass
-                time.sleep(0.1)
+                sleep(0.1)
 
         def ___id_safe_system___():
             """保证_id_变量为常量,无法被修改"""
@@ -164,10 +159,8 @@ Gitee:https://gitee.com/HardyProjects/clathon"""
                 if _id_ != backup_id:
                     _id_ = backup_id
 
-        ___IDSafeSystem___ = threading.Thread(target=___id_safe_system___)
-        ___MessageSystem___ = threading.Thread(target=___msg_system___)
-        ___IDSafeSystem___.start()
-        ___MessageSystem___.start()
+        ___IDSafeSystem___ = Thread(target=___id_safe_system___)
+        ___MessageSystem___ = Thread(target=___msg_system___)
 
         for k, v in _configObj_.items():
             globals()[k] = v
@@ -175,16 +168,20 @@ Gitee:https://gitee.com/HardyProjects/clathon"""
         for num in range(IDRANGE):
             add = str(num * 2)
             IDLIST.append(add)
-        _id_ = id(random.choice(IDLIST))
-        del num, add, IDLIST, IDRANGE
+        _id_ = id(choice(IDLIST))
+
+        ___IDSafeSystem___.start()
+        ___MessageSystem___.start()
+
+        del num, add, IDLIST, IDRANGE, k, v
         exec(_ConfigCode_)
 
         try:
-            if len(sys.argv) >= 2:
-                for file in sys.argv[1:]:
+            if len(argv) >= 2:
+                for file in argv[1:]:
                     with open(file, "r", encoding="utf-8") as f:
                         exec(f.read())
-                sys.exit()
+                exit()
             else:
                 pass
         except Exception as error:
@@ -196,7 +193,7 @@ Gitee:https://gitee.com/HardyProjects/clathon"""
 def main():
     try:
         from pyautogui import press
-        from pprint import pformat
+        from pprint import pprint
         from traceback import format_exc as msg_err
     except ImportError:
         pass
@@ -211,22 +208,9 @@ Python规范版本:3.11.1 on Windows win32
         try:
             _prompt_ = f"In [{str(_line_).rjust(2)}]>"
             _put_ = input(_prompt_)
-            _is_value_ = globals().get(_put_, False)
-
-            try:
-                eval(_put_)
-            except SyntaxError:
-                pass
-            else:
-                _is_value_ = eval(_put_)
 
             if _put_ == "exit" or _put_ == "quit":
                 exit(0)
-            elif _is_value_:
-                _value_print_ = pformat(_is_value_)
-                del _is_value_
-                print(_value_print_)
-                del _value_print_
             elif _put_.startswith(_KeyWord_):
                 os.system(_put_[1:])
             elif _put_.startswith("?"):
@@ -247,9 +231,26 @@ Python规范版本:3.11.1 on Windows win32
             else:
                 if (_put_.startswith(" ") and _put_.endswith(" ")) or _put_ == "":
                     continue
-                exec(_put_)
+                try:
+                    _value_ = eval(_put_)
+                    if _value_ != None:
+                        pprint(_value_)
+                    del _value_
+                except SyntaxError:
+                    try:
+                        exec(_put_)
+                    except Exception as _error_:
+                        _error_ = msg_err().split("\n")
+                        del _error_[1]
+                        In.append(_put_)
+                        _line_ += 1
+                        print("\n".join(_error_))
+                else:
+                    pass
             _line_ += 1
             In.append(_put_)
+        except KeyboardInterrupt:
+            print("\n用户中断操作")
         except Exception as _error_:
             _error_ = msg_err().split("\n")
             del _error_[1]
