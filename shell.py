@@ -13,7 +13,7 @@ Gitee 项目仓库的 URL:https://gitee.com/HardyProjects/clathon
 描述:Clathon 是用 CPython 编写的 Python 解释器。
 """
 
-from func import _version_, _date_, _active_, _KeyWord_, os, argv
+from func import _version_, _date_, _active_, _KeyWord_, os, argv, exit, quit
 from pyautogui import press
 from pprint import pprint
 from traceback import format_exc as msg_err
