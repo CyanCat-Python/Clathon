@@ -14,11 +14,11 @@ Gitee 项目仓库的 URL:https://gitee.com/HardyProjects/clathon
 """
 
 from func import _version_, _date_, _active_, _KeyWord_, os, argv
+from pyautogui import press
+from pprint import pprint
+from traceback import format_exc as msg_err
 
 def main():
-    from pyautogui import press
-    from pprint import pprint
-    from traceback import format_exc as msg_err
     print(
         f"""Clathon版本 {_version_}({_date_}) 64 Bits
 Python规范版本:3.11.1 on Windows win32
@@ -28,7 +28,7 @@ Python规范版本:3.11.1 on Windows win32
     In = []
     while _active_:
         try:
-            _prompt_ = f"In [{str(_line_).rjust(2)}]> "
+            _prompt_ = f"In [{str(_line_).rjust(2)}]>"
             _put_ = input(_prompt_)
 
             if _put_ == "exit" or _put_ == "quit":
@@ -56,6 +56,8 @@ Python规范版本:3.11.1 on Windows win32
                     if _value_ != None:
                         pprint(_value_)
                     del _value_
+                    In.append(_put_)
+                    _line_ += 1
                 except SyntaxError:
                     try:
                         exec(_put_)
@@ -65,10 +67,13 @@ Python规范版本:3.11.1 on Windows win32
                         In.append(_put_)
                         _line_ += 1
                         print("\n".join(_error_))
-                else:
-                    pass
-            _line_ += 1
-            In.append(_put_)
+                except Exception as _error_:
+                    _error_ = msg_err().split("\n")
+                    del _error_[1]
+                    In.append(_put_)
+                    _line_ += 1
+                    print("\n".join(_error_))
+                    In.append(_put_)
         except KeyboardInterrupt:
             print("\n用户中断操作")
         except Exception as _error_:
@@ -88,3 +93,60 @@ def run(files):
         print(str(error))
     else:
         pass
+
+def shell(code=""):
+    try:
+        In = []
+        _put_ = code
+
+        if _put_ == "exit" or _put_ == "quit":
+            exit(0)
+        elif _put_.startswith(_KeyWord_):
+            os.system(_put_[1:])
+        elif _put_.endswith(":"):
+            _block_code_ = ""
+            _block_code_ += _put_
+            _block_active_ = True
+            while _block_active_:
+                press("\t")
+                _block_put_ = input()
+                _block_code_ += "\n" + _block_put_
+                if (
+                    _block_put_.startswith(" ") and _block_put_.endswith(" ")
+                ) or _block_put_ == "":
+                    break
+            exec(_block_code_)
+        else:
+            if (_put_.startswith(" ") and _put_.endswith(" ")) or _put_ == "":
+                return
+            try:
+                _value_ = eval(_put_)
+                if _value_ != None:
+                    pprint(_value_)
+                del _value_
+                In.append(_put_)
+                _line_ += 1
+            except SyntaxError:
+                try:
+                    exec(_put_)
+                except Exception as _error_:
+                    _error_ = msg_err().split("\n")
+                    del _error_[1]
+                    In.append(_put_)
+                    _line_ += 1
+                    print("\n".join(_error_))
+            except Exception as _error_:
+                _error_ = msg_err().split("\n")
+                del _error_[1]
+                In.append(_put_)
+                _line_ += 1
+                print("\n".join(_error_))
+                In.append(_put_)
+    except KeyboardInterrupt:
+        print("\n用户中断操作")
+    except Exception as _error_:
+        _error_ = msg_err().split("\n")
+        del _error_[1]
+        In.append(_put_)
+        _line_ += 1
+        print("\n".join(_error_))
