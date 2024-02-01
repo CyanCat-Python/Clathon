@@ -97,6 +97,7 @@ def run(files):
 def shell(code=""):
     try:
         In = []
+        _line_ = 1
         _put_ = code
 
         if _put_ == "exit" or _put_ == "quit":
