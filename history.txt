@@ -1,3 +1,8 @@
+3bc51e145d3fe76b3a10bb00561e486b1b05f024 bug-1
+ad9a19bd4e3a347daa8a0cf160a3af9bee6bb0e3 bug -1
+54d180628c6beb1c6b37e0674fe233094a8d6eb0 汉化Build MSI
+b1031e99ad8ab1ca962cc20b8307cf59d56c09c4 汉化Build EXE
+cc6f9bffa4ef2181cc5dd501777a648ed69590bc 汉化！！
 3965a70151c92f7e117513c52ebf00e768d0b251 因未知原因重启项目
 e407a0127c013445d0998364bcc9b4afe97eb074 Merge branch 'main' of gitee.com:HardyProjects/clathon
 0d583da473b96345b77b780f401b783af85d7c84 增加了main函数
