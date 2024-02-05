@@ -1,3 +1,9 @@
+0d06e7a88fb570a8e8c825fed68d925142aa02cd build msi
+31558e1212d1fd3e3fb7b1609ed1ccb229ab70dd build exe
+a74d9c12d19e154a1cfa67f5aa7ea2ea98ea0d82 bug - 1
+0b551a888a316398a8af304cfbdbfe1680383c5c bug - 1
+7ada9ca52f44e69b541187f2d8eabf63ab108c5d 怎加shell函数,可以在文件中模拟shell运行结果
+bc60446f81a729bbba511b6051fd2bff64679aba 尝试拆分
 3bc51e145d3fe76b3a10bb00561e486b1b05f024 bug-1
 ad9a19bd4e3a347daa8a0cf160a3af9bee6bb0e3 bug -1
 54d180628c6beb1c6b37e0674fe233094a8d6eb0 汉化Build MSI

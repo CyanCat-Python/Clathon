@@ -29,6 +29,20 @@ for i in range(1):
                 data = load(file)
                 return data
 
+        def get_help(codeObj, get=False):
+            """用于获取对象(codeObj)的帮助"""
+            data = str(codeObj)
+            typeObj = str(type(codeObj))
+            doc = codeObj.__doc__
+            msg = f"""数据:{data}
+类型:{typeObj}
+文档:{doc}
+"""
+            if get:
+                return msg
+            else:
+                print(msg)
+
         _prompt_ = ""
         _put_ = ""
         IDRANGE, IDLIST = 5, []

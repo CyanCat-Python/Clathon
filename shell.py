@@ -13,7 +13,7 @@ Gitee 项目仓库的 URL:https://gitee.com/HardyProjects/clathon
 描述:Clathon 是用 CPython 编写的 Python 解释器。
 """
 
-from func import _version_, _date_, _active_, _KeyWord_, os, argv, exit, quit
+from func import _version_, _date_, _active_, _KeyWord_, os, argv, exit, quit, get_help
 from pyautogui import press
 from pprint import pprint
 from traceback import format_exc as msg_err
@@ -35,6 +35,15 @@ Python规范版本:3.11.1 on Windows win32
                 exit(0)
             elif _put_.startswith(_KeyWord_):
                 os.system(_put_[1:])
+                In.append(_put_)
+                _line_ += 1
+            elif _put_.startswith("?"):
+                try:
+                    print(get_help(eval(_put_[1:]), get=True))
+                except SyntaxError:
+                    print("?语法只支持变量,表达式和对象,而不是其他语句")
+                In.append(_put_)
+                _line_ += 1
             elif _put_.endswith(":"):
                 _block_code_ = ""
                 _block_code_ += _put_
@@ -47,9 +56,13 @@ Python规范版本:3.11.1 on Windows win32
                         _block_put_.startswith(" ") and _block_put_.endswith(" ")
                     ) or _block_put_ == "":
                         break
+                In.append(_put_)
+                _line_ += 1
                 exec(_block_code_)
             else:
-                if (_put_.startswith(" ") and _put_.endswith(" ")) or _put_ == "":
+                if (
+                    _put_.startswith(" ") and _put_.endswith(" ")
+                    ) or _put_ == "":
                     continue
                 try:
                     _value_ = eval(_put_)
@@ -61,6 +74,8 @@ Python规范版本:3.11.1 on Windows win32
                 except SyntaxError:
                     try:
                         exec(_put_)
+                        In.append(_put_)
+                        _line_ += 1
                     except Exception as _error_:
                         _error_ = msg_err().split("\n")
                         del _error_[1]
