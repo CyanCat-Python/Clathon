@@ -12,7 +12,7 @@ Gitee 项目仓库的 URL:https://gitee.com/HardyProjects/clathon
 版本: 1.20.4
 描述:Clathon 是用 CPython 编写的 Python 解释器。
 """
-from shell import main, run, shell
+from shell import *
 from sys import argv
 
 if __name__ == "__main__":

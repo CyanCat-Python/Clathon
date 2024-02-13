@@ -42,6 +42,13 @@ for i in range(1):
             while _active_:
                 if _id_ != backup_id:
                     _id_ = backup_id
+        
+        def ___clear_system___():
+            import keyboard as key
+            global cls
+            while _active_:
+                key.add_hotkey("pause", target=cls)
+                key.wait()
 
         ___IDSafeSystem___ = Thread(target=___id_safe_system___)
         ___MessageSystem___ = Thread(target=___msg_system___)

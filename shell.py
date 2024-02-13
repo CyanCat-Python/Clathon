@@ -13,10 +13,13 @@ Gitee 项目仓库的 URL:https://gitee.com/HardyProjects/clathon
 描述:Clathon 是用 CPython 编写的 Python 解释器。
 """
 
-from func import _version_, _date_, _active_, _KeyWord_, os, argv, exit, quit, get_help
+from func import _version_, _date_, _active_, _KeyWord_, os, get_help
+from func import *
 from pyautogui import press
 from pprint import pprint
 from traceback import format_exc as msg_err
+
+In = []
 
 def main():
     print(
@@ -25,7 +28,6 @@ Python规范版本:3.11.1 on Windows win32
     """
     )
     _line_ = 0
-    In = []
     while _active_:
         try:
             _prompt_ = f"In [{str(_line_).rjust(2)}]>"
@@ -66,8 +68,7 @@ Python规范版本:3.11.1 on Windows win32
                     continue
                 try:
                     _value_ = eval(_put_)
-                    if _value_ != None:
-                        pprint(_value_)
+                    print(str(_value_))
                     del _value_
                     In.append(_put_)
                     _line_ += 1
@@ -109,16 +110,24 @@ def run(files):
     else:
         pass
 
-def shell(code=""):
+def shell(code="", In=In):
     try:
-        In = []
-        _line_ = 1
-        _put_ = code
+        _prompt_ = f"In [{str(_line_).rjust(2)}]>"
+        _put_ = input(_prompt_)
 
         if _put_ == "exit" or _put_ == "quit":
             exit(0)
         elif _put_.startswith(_KeyWord_):
             os.system(_put_[1:])
+            In.append(_put_)
+            _line_ += 1
+        elif _put_.startswith("?"):
+            try:
+                print(get_help(eval(_put_[1:]), get=True))
+            except SyntaxError:
+                print("?语法只支持变量,表达式和对象,而不是其他语句")
+            In.append(_put_)
+            _line_ += 1
         elif _put_.endswith(":"):
             _block_code_ = ""
             _block_code_ += _put_
@@ -131,20 +140,25 @@ def shell(code=""):
                     _block_put_.startswith(" ") and _block_put_.endswith(" ")
                 ) or _block_put_ == "":
                     break
+            In.append(_put_)
+            _line_ += 1
             exec(_block_code_)
         else:
-            if (_put_.startswith(" ") and _put_.endswith(" ")) or _put_ == "":
-                return
+            if (
+                _put_.startswith(" ") and _put_.endswith(" ")
+                ) or _put_ == "":
+                return None
             try:
                 _value_ = eval(_put_)
-                if _value_ != None:
-                    pprint(_value_)
+                print(str(_value_))
                 del _value_
                 In.append(_put_)
                 _line_ += 1
             except SyntaxError:
                 try:
                     exec(_put_)
+                    In.append(_put_)
+                    _line_ += 1
                 except Exception as _error_:
                     _error_ = msg_err().split("\n")
                     del _error_[1]
