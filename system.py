@@ -19,7 +19,7 @@ for i in range(1):
     try:
         # Systems
         def ___msg_system___():
-            """监听目录下的clathon_message文件并将其信息打印至屏幕上"""
+            """监听工作目录下的clathon_message文件并将其信息打印至屏幕上"""
             while _active_:
                 try:
                     with open("clathon_message", "r", encoding="utf-8") as f:
@@ -36,7 +36,7 @@ for i in range(1):
                 sleep(0.1)
 
         def ___id_safe_system___():
-            """保证_id_变量为常量,无法被修改"""
+            """保证设置的变量为常量,无法被修改"""
             global _id_
             backup_id = _id_
             while _active_:

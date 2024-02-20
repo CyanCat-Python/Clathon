@@ -19,6 +19,7 @@ from pyautogui import press
 from pprint import pprint
 from traceback import format_exc as msg_err
 
+
 In = []
 
 def main():
@@ -41,6 +42,8 @@ Python规范版本:3.11.1 on Windows win32
                 _line_ += 1
             elif _put_.startswith("?"):
                 try:
+                    if _put_.endswith(" "):
+                        continue
                     print(get_help(eval(_put_[1:]), get=True))
                 except SyntaxError:
                     print("?语法只支持变量,表达式和对象,而不是其他语句")
@@ -77,6 +80,13 @@ Python规范版本:3.11.1 on Windows win32
                         exec(_put_)
                         In.append(_put_)
                         _line_ += 1
+                    except SyntaxError:
+                        _error_ = msg_err().split("\n")
+                        del _error_[:10]
+                        del _error_[2]
+                        In.append(_put_)
+                        _line_ += 1
+                        print("\n".join(_error_)[1:])
                     except Exception as _error_:
                         _error_ = msg_err().split("\n")
                         del _error_[1]
@@ -91,7 +101,7 @@ Python规范版本:3.11.1 on Windows win32
                     print("\n".join(_error_))
                     In.append(_put_)
         except KeyboardInterrupt:
-            print("\n用户中断操作")
+            cls()
         except Exception as _error_:
             _error_ = msg_err().split("\n")
             del _error_[1]

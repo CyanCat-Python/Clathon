@@ -12,11 +12,17 @@ Gitee 项目仓库的 URL:https://gitee.com/HardyProjects/clathon
 版本: 1.20.4
 描述:Clathon 是用 CPython 编写的 Python 解释器。
 """
-from shell import *
+import _main_
 from sys import argv
+from easygui import textbox
+from traceback import format_exc
 
 if __name__ == "__main__":
-    if len(argv) == 1:
-        main()
-    else:
-        run(argv[1:])
+    try:
+        if len(argv) == 1:
+            _main_.main()
+        else:
+            _main_.run(argv[1:])
+    except Exception as trace:
+        error_msg = format_exc()
+        textbox(msg='Clathon发生了内部错误,原因如下:', title='Clathon发生了内部错误', text=error_msg, codebox=1)
