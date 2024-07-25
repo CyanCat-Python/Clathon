@@ -8,5 +8,5 @@ setup(
     version="1.20.1",
     description="ColorFur Application",
     author="Hardy Zhang",
-    executables=[Executable("Clathon.py")]
+    executables=[Executable("clathon.py")]
 )

@@ -1,4 +1,3 @@
-# -- coding: utf-8 --**
 """Clathon 是一个用 CPython 编写的 Python 解释器。它添加了很多功能(即编写
 Python 中的 Python，我被实现震撼了)
 设置和使用:
@@ -13,6 +12,13 @@ Gitee 项目仓库的 URL:https://gitee.com/HardyProjects/clathon
 描述:Clathon 是用 CPython 编写的 Python 解释器。
 """
 
+def getData(fileObj):
+    """获取JSON文件中的数据"""
+    with open(fileObj, "r", encoding="utf-8") as file:
+        data = load(file)
+        return data
+
+
 for i in range(1):
     try:
         from json import load, loads, dump, dumps
@@ -23,11 +29,23 @@ for i in range(1):
         from datetime import datetime
         from threading import Thread
 
-        def getData(fileObj):
-            """获取JSON文件中的数据"""
-            with open(fileObj, "r", encoding="utf-8") as file:
-                data = load(file)
-                return data
+        IDRANGE, IDLIST = 5, []
+        _configObj_ = getData(os.environ["USERPROFILE"] + "\\config.json")
+        _config_path_ = _configObj_["config_path"]
+        _ConfigCode_ = ""
+        _msg_dict_ = {}
+
+        def str_ord(string):
+            """把string中的所有字符转为Unicode字符值再返回"""
+            result = [ord(char) for char in string]
+            return result
+            
+        def list_chr(the_list):
+            """把the_list中的所有元素当成Unicode字符值转为string"""
+            result = ""
+            for orded_char in the_list:
+                result += chr(orded_char)
+            return result
 
         def get_help(codeObj, get=False):
             """用于获取对象(codeObj)的帮助"""
@@ -43,22 +61,9 @@ for i in range(1):
             else:
                 print(msg)
 
-        _prompt_ = ""
-        _put_ = ""
-        IDRANGE, IDLIST = 5, []
-        _active_ = True
-        _configObj_ = getData(os.environ["USERPROFILE"] + "\\config.json")
-        _config_path_ = _configObj_["config_path"]
-        _ErrorTries_ = 0
-        _msg_dict_ = {}
-        _KeyWord_ = "$"
-        _ConfigCode_ = ""
         with open(_config_path_, "r", encoding="utf-8") as f:
             _ConfigCode_ = f.read()
         del f
-        _date_ = "2024 1.26"
-        _version_ = "1.20.4"
-        _id_ = 0
 
         def about():
             """显示Clathon的相关信息"""
@@ -114,7 +119,10 @@ Gitee地址:https://gitee.com/HardyProjects/clathon"""
 
         def cls():
             """清空终端"""
-            os.system("cls")
+            try:
+                os.system("cls")
+            except:
+                pass
 
         def exit(status_code=0):
             """退出"""
@@ -123,15 +131,6 @@ Gitee地址:https://gitee.com/HardyProjects/clathon"""
         def quit(status_code=0):
             """退出"""
             os._exit(status_code)
-
-        def crash(limit=9999999):
-            """使用栈溢出引发人为崩溃(非必要不要使用!)"""
-
-            def stack():
-                stack()
-
-            setrecursionlimit(int(limit))
-            stack()
 
         def ifType(aObj, bObj):
             """检查a的类型是b的类型"""
@@ -158,5 +157,6 @@ Gitee地址:https://gitee.com/HardyProjects/clathon"""
         del num, add, IDLIST, IDRANGE, k, v
         exec(_ConfigCode_)
 
-    except Exception as ErrorMessage:
-        print(ErrorMessage)
+    except Exception as _ErrorMessage_:
+        print("配置文件出现问题:", end="")
+        print(_ErrorMessage_)
