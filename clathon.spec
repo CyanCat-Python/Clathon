@@ -2,7 +2,7 @@
 
 
 a = Analysis(
-    ['clathon.py'],
+    ['Clathon.py'],
     pathex=[],
     binaries=[],
     datas=[],
@@ -21,7 +21,7 @@ exe = EXE(
     a.scripts,
     [],
     exclude_binaries=True,
-    name='clathon',
+    name='Clathon',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
@@ -41,5 +41,5 @@ coll = COLLECT(
     strip=False,
     upx=True,
     upx_exclude=[],
-    name='clathon',
+    name='Clathon',
 )
