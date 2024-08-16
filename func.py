@@ -7,10 +7,14 @@ Clathon 交互式环境，或使用 clathon <file>运行文件
 Gitee 项目仓库的 URL:https://gitee.com/HardyProjects/clathon
 仓库地址:git@gitee.com:HardyProjects/clathon.git
 作者： Cyan Wolf
-日期:2024/1/1
-版本: 1.20.4
+日期:2024/8/16
+版本: 1.20.6
 描述:Clathon 是用 CPython 编写的 Python 解释器。
 """
+
+from clathon import _version_, _date_
+from termcolor import colored
+import uuid
 
 def getData(fileObj):
     """获取JSON文件中的数据"""
@@ -29,11 +33,22 @@ for i in range(1):
         from datetime import datetime
         from threading import Thread
 
-        IDRANGE, IDLIST = 5, []
         _configObj_ = getData(os.environ["USERPROFILE"] + "\\config.json")
         _config_path_ = _configObj_["config_path"]
         _ConfigCode_ = ""
-        _msg_dict_ = {}
+
+        def info(text, end="\n"):
+            print(colored(text, "yellow"), end=end)
+
+        def text(text, end="\n"):
+            print(colored(text, "white"), end=end)
+
+        def user(text, end="\n"):
+            print(colored(text, "magenta"), end=end)
+
+        def error(text, end="\n"):
+            print(colored(text, "red"), end=end)
+
 
         def str_ord(string):
             """把string中的所有字符转为Unicode字符值再返回"""
@@ -112,7 +127,6 @@ Gitee地址:https://gitee.com/HardyProjects/clathon"""
         #         import PIL
         #         import pathlib
         #         from pathlib import Path
-
         def cd(path):
             """更改工作目录至<path>参数"""
             os.chdir(path)
@@ -139,22 +153,10 @@ Gitee地址:https://gitee.com/HardyProjects/clathon"""
         def title(text):
             """设置终端的标题"""
             os.system(f"title {text}")
-
-        def send(text=""):
-            """发送消息(依赖msg_system)"""
-            with open("clathon_message", "w", encoding="utf-8") as f:
-                text = dumps({"from": _id_, "text": text})
-                f.write(text)
         
         for k, v in _configObj_.items():
             globals()[k] = v
 
-        for num in range(IDRANGE):
-            add = str(num * 2)
-            IDLIST.append(add)
-        _id_ = id(choice(IDLIST))
-
-        del num, add, IDLIST, IDRANGE, k, v
         exec(_ConfigCode_)
 
     except Exception as _ErrorMessage_:

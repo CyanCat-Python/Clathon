@@ -8,10 +8,15 @@ Clathon 交互式环境，或使用 clathon <file>运行文件
 Gitee 项目仓库的 URL:https://gitee.com/HardyProjects/clathon
 仓库地址:git@gitee.com:HardyProjects/clathon.git
 作者： Cyan Wolf
-日期:2024/1/1
-版本: 1.20.4
+日期:2024/8/16
+版本: 1.20.6
 描述:Clathon 是用 CPython 编写的 Python 解释器。
 """
+
+_date_ = "2024 8.16"
+_version_ = "1.20.6"
+_active_ = True
+_KeyWord_ = "$"
 
 from func import *
 from pyautogui import press
@@ -21,14 +26,6 @@ import os
 
 In = []
 
-_date_ = "2024 3.13"
-_version_ = "1.20.4"
-_active_ = True
-_prompt_ = ""
-_ErrorTries_ = 0
-_KeyWord_ = "$"
-_id_ = 0
-
 def getData(fileObj):
     """获取JSON文件中的数据"""
     with open(fileObj, "r", encoding="utf-8") as file:
@@ -36,15 +33,16 @@ def getData(fileObj):
         return data
 
 def main():
-    print(
+    info(
         f"""Clathon版本 {_version_}({_date_}) 64 Bits
 Python规范版本:3.11.1 on Windows win32
     """
     )
     _line_ = 0
+    import func
     while _active_:
         try:
-            _prompt_ = f"In[{str(_line_).rjust(2)}] {os.getcwd()}>"
+            _prompt_ = colored(f"In[{str(_line_).rjust(2)}] {os.getcwd()}>", "green")
             _put_ = input(_prompt_)
 
             if _put_ == "exit" or _put_ == "quit":
@@ -59,7 +57,7 @@ Python规范版本:3.11.1 on Windows win32
                         continue
                     print(get_help(eval(_put_[1:]), get=True))
                 except SyntaxError:
-                    print("?语法只支持变量,表达式和对象,而不是其他语句")
+                    error("?语法只支持变量,表达式和对象,而不是其他语句")
                 In.append(_put_)
                 _line_ += 1
             elif _put_.endswith(":"):
@@ -84,7 +82,7 @@ Python规范版本:3.11.1 on Windows win32
                     continue
                 try:
                     _value_ = eval(_put_)
-                    print(str(_value_))
+                    user(str(_value_))
                     del _value_
                     In.append(_put_)
                     _line_ += 1
@@ -99,19 +97,19 @@ Python规范版本:3.11.1 on Windows win32
                         del _error_[2]
                         In.append(_put_)
                         _line_ += 1
-                        print("\n".join(_error_)[1:])
+                        error("\n".join(_error_)[1:])
                     except Exception as _error_:
                         _error_ = msg_err().split("\n")
                         del _error_[1]
                         In.append(_put_)
                         _line_ += 1
-                        print("\n".join(_error_))
+                        error("\n".join(_error_))
                 except Exception as _error_:
                     _error_ = msg_err().split("\n")
                     del _error_[1]
                     In.append(_put_)
                     _line_ += 1
-                    print("\n".join(_error_))
+                    error("\n".join(_error_))
                     In.append(_put_)
         except KeyboardInterrupt:
             cls()
@@ -120,7 +118,7 @@ Python规范版本:3.11.1 on Windows win32
             del _error_[1]
             In.append(_put_)
             _line_ += 1
-            print("\n".join(_error_))
+            error("\n".join(_error_))
 
 def run(files):
     try:
@@ -132,7 +130,7 @@ def run(files):
         print(str(error))
     else:
         pass
-
+"""
 def shell(code="", In=In):
     try:
         _prompt_ = f"In [{str(_line_).rjust(2)}]>"
@@ -203,7 +201,7 @@ def shell(code="", In=In):
         In.append(_put_)
         _line_ += 1
         print("\n".join(_error_))
-
+"""
 if __name__ == "__main__":
     if len(argv) == 1:
         main()
