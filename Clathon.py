@@ -42,7 +42,7 @@ Python规范版本:3.11.1 on Windows win32
     import func
     while _active_:
         try:
-            _prompt_ = colored(f"In[{str(_line_).rjust(2)}] {os.getcwd()}>", "green")
+            _prompt_ = colored(f"In[{str(_line_).rjust(2)}] >", "green")
             _put_ = input(_prompt_)
 
             if _put_ == "exit" or _put_ == "quit":
