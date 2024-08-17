@@ -32,7 +32,7 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
-    icon=['H:\\Picture\\Saved Pictures\\adklb-taze5-001.ico'],
+    icon=['Icon.ico'],
     contents_directory='.',
 )
 coll = COLLECT(

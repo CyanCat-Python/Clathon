@@ -1,4 +1,5 @@
-c14c617ec68a5696f958dd8c637e0962c0fc524e (HEAD -> main, gitee/main) 修复与func.py之间的导入关系，让PROMPT也能用config.json和config.py定制
+682564bfd5dab33a99f4ca5dbfd2f3299e858837 (HEAD -> main, gitee/main) 删除无用的东西
+c14c617ec68a5696f958dd8c637e0962c0fc524e 修复与func.py之间的导入关系，让PROMPT也能用config.json和config.py定制
 4a4e77d13e3a2d037f9d3245bde81a021b2d87b5 增加挂件
 c65edad4e5ca620a66f21b321de216a8658c9135 build tar.gz
 1154d031495b14600eb0adcea061977ac8651e9d 创建PIP版本前的修改

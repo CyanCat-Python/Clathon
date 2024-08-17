@@ -1,0 +1,1 @@
+@pyinstaller --contents-directory . -i Icon.ico Clathon.py

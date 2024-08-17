@@ -22,12 +22,6 @@ import os
 
 In = []
 
-def getData(fileObj):
-    """获取JSON文件中的数据"""
-    with open(fileObj, "r", encoding="utf-8") as file:
-        data = load(file)
-        return data
-
 def main():
     global _version_, _prompt_, _active_, _date_
     info(
