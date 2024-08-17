@@ -13,12 +13,8 @@ Gitee 项目仓库的 URL:https://gitee.com/HardyProjects/clathon
 描述:Clathon 是用 CPython 编写的 Python 解释器。
 """
 
-_date_ = "2024 8.16"
-_version_ = "1.20.6"
-_active_ = True
-_KeyWord_ = "$"
-
 from func import *
+from func import _version_, _date_, _active_, _KeyWord_, _prompt_
 from pyautogui import press
 from pprint import pprint
 from traceback import format_exc as msg_err
@@ -33,17 +29,17 @@ def getData(fileObj):
         return data
 
 def main():
+    global _version_, _prompt_, _active_, _date_
     info(
         f"""Clathon版本 {_version_}({_date_}) 64 Bits
 Python规范版本:3.11.1 on Windows win32
     """
     )
     _line_ = 0
-    import func
+    _put_ = ""
     while _active_:
         try:
-            _prompt_ = colored(f"In[{str(_line_).rjust(2)}] >", "green")
-            _put_ = input(_prompt_)
+            _put_ = input(eval(_prompt_))
 
             if _put_ == "exit" or _put_ == "quit":
                 exit(0)

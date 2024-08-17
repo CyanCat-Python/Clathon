@@ -1,4 +1,8 @@
-0aacac0dd5051a57a0b55a370f1ed8b1888ec1de (HEAD -> main, gitee/main) Build Installer
+4a4e77d13e3a2d037f9d3245bde81a021b2d87b5 (HEAD -> main, gitee/main) 增加挂件
+c65edad4e5ca620a66f21b321de216a8658c9135 build tar.gz
+1154d031495b14600eb0adcea061977ac8651e9d 创建PIP版本前的修改
+98a238a60ab2d23579d3b78dac1cbf9920f52cd3 删除无用的东西
+0aacac0dd5051a57a0b55a370f1ed8b1888ec1de (tag: v1.20.6) Build Installer
 643e23331a966fc05f664834a34a02ae30a60d7d build
 bdfcd8f0df44d02ca421d6cf81dc4da109178a8c -1
 a73dc9751faf88d7178cded3c1322f409d3bfdd0 增加了彩色输出，修改了小细节（如version变量）

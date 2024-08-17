@@ -12,7 +12,6 @@ Gitee 项目仓库的 URL:https://gitee.com/HardyProjects/clathon
 描述:Clathon 是用 CPython 编写的 Python 解释器。
 """
 
-from clathon import _version_, _date_
 from termcolor import colored
 import uuid
 
@@ -36,6 +35,11 @@ for i in range(1):
         _configObj_ = getData(os.environ["USERPROFILE"] + "\\config.json")
         _config_path_ = _configObj_["config_path"]
         _ConfigCode_ = ""
+        _date_ = "2024 8.16"
+        _version_ = "1.20.6"
+        _active_ = True
+        _KeyWord_ = "$"
+        _prompt_ = 'colored(f"In[{str(_line_).rjust(2)}] >", "green")'
 
         def info(text, end="\n"):
             print(colored(text, "yellow"), end=end)
