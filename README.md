@@ -1,18 +1,19 @@
- # **Clathon** 
+# **Clathon                                                                           [![Fork me on Gitee](https://gitee.com/HardyProjects/clathon/widgets/widget_3.svg)](https://gitee.com/HardyProjects/clathon)**
 
 ## 介绍
+
 用CPython来实现Python规范，一个用Python写的Python
 
 ## 安装教程
 
- ### 一、源码安装
+### 一、源码安装
 
 1. 把源码解压到本地（或用"git clone"命令）
-`git clone git@gitee.com:MinePy/clathon.git`
+   `git clone git@gitee.com:MinePy/clathon.git`
 2. 把安装目录添加到PATH中
 3. 安装完成
 
- ### 二、安装包安装
+### 二、安装包安装
 
 1. 打开安装向导
 2. 添加安装目录到PATH中
@@ -20,8 +21,8 @@
 
 ## 使用说明
 
-1. 运行`clathon`进入Clathon交互环境
-2. 运行`clathon xxx.py`打开文件
+1. 运行 `clathon`进入Clathon交互环境
+2. 运行 `clathon xxx.py`打开文件
 
 ## 参与贡献
 
