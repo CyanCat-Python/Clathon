@@ -1,4 +1,5 @@
-4a4e77d13e3a2d037f9d3245bde81a021b2d87b5 (HEAD -> main, gitee/main) 增加挂件
+c14c617ec68a5696f958dd8c637e0962c0fc524e (HEAD -> main, gitee/main) 修复与func.py之间的导入关系，让PROMPT也能用config.json和config.py定制
+4a4e77d13e3a2d037f9d3245bde81a021b2d87b5 增加挂件
 c65edad4e5ca620a66f21b321de216a8658c9135 build tar.gz
 1154d031495b14600eb0adcea061977ac8651e9d 创建PIP版本前的修改
 98a238a60ab2d23579d3b78dac1cbf9920f52cd3 删除无用的东西
