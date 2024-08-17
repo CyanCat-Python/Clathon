@@ -13,7 +13,6 @@ Gitee 项目仓库的 URL:https://gitee.com/HardyProjects/clathon
 """
 
 from termcolor import colored
-import Clathon
 
 def getData(fileObj):
     """获取JSON文件中的数据"""
