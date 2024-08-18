@@ -24,7 +24,7 @@ import os
 In = []
 
 def main():
-    global _version_, _prompt_, _active_, _date_
+    global _version_, _prompt_, _active_, _date_, _KeyWord_
     info(
         f"""Clathon版本 {_version_}({_date_}) 64 Bits
 Python规范版本:3.11.1 on Windows win32
@@ -38,12 +38,12 @@ Python规范版本:3.11.1 on Windows win32
 
             if _put_ == "exit" or _put_ == "quit":
                 exit(0)
-            elif callable(eval(_put_.split(" ")[0])):
-                exec(f"{_put_.split(' ')[0]}({','.join(_put_.split(' ')[1:])})")
             elif _put_.startswith(_KeyWord_):
                 os.system(_put_[1:])
                 In.append(_put_)
                 _line_ += 1
+            elif callable(eval(_put_.split(" ")[0])):
+                exec(f"{_put_.split(' ')[0]}({','.join(_put_.split(' ')[1:])})")
             elif _put_.startswith("?"):
                 try:
                     if _put_.endswith(" "):
@@ -121,13 +121,13 @@ def shell(code="", In=In):
         if _put_ == "exit" or _put_ == "quit":
             exit(0)
         elif callable(eval(_put_.split(" ")[0])):
-                exec(f"{_put_.split(' ')[0]}({','.join(_put_.split(' ')[1:])})")
+            exec(f"{_put_.split(' ')[0]}({','.join(_put_.split(' ')[1:])})")
+            In.append(_put_)
+            _line_ += 1
         elif _put_.startswith(_KeyWord_):
             os.system(_put_[1:])
             In.append(_put_)
             _line_ += 1
-        elif callable(_put_.split(" ")[0]):
-            exec(_put_.split(" ")[0] + "(" + (" ".join(_put_.split(" ")[1:])) + ")")
         elif _put_.startswith("?"):
             try:
                 if _put_.endswith(" "):

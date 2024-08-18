@@ -159,9 +159,13 @@ Gitee地址:https://gitee.com/HardyProjects/clathon"""
         
         for k, v in _configObj_.items():
             globals()[k] = v
+        
+        del k, v
 
         exec(_ConfigCode_)
 
     except Exception as _ErrorMessage_:
         print("配置文件出现问题:", end="")
         print(_ErrorMessage_)
+
+del i
