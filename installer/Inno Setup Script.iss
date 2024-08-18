@@ -7,7 +7,7 @@
 ; (若要生成新的 GUID，可在菜单中点击 "工具|生成 GUID"。)
 AppId={{7DA78FD6-5C1D-4C31-AC16-00FF7AE7485D}
 AppName=Clathon
-AppVersion=1.20.6
+AppVersion=1.20.7
 ;AppVerName=Clathon 1.20.6
 AppPublisher=Hardy
 AppPublisherURL=Clathon
