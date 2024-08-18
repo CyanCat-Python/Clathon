@@ -8,8 +8,8 @@ Clathon 交互式环境，或使用 clathon <file>运行文件
 Gitee 项目仓库的 URL:https://gitee.com/HardyProjects/clathon
 仓库地址:git@gitee.com:HardyProjects/clathon.git
 作者： Cyan Wolf
-日期:2024/8/16
-版本: 1.20.6
+日期:2024/8/18
+版本: 1.20.7
 描述:Clathon 是用 CPython 编写的 Python 解释器。
 """
 
@@ -42,8 +42,6 @@ Python规范版本:3.11.1 on Windows win32
                 os.system(_put_[1:])
                 In.append(_put_)
                 _line_ += 1
-            elif callable(eval(_put_.split(" ")[0])):
-                exec(f"{_put_.split(' ')[0]}({','.join(_put_.split(' ')[1:])})")
             elif _put_.startswith("?"):
                 try:
                     if _put_.endswith(" "):
@@ -85,12 +83,23 @@ Python规范版本:3.11.1 on Windows win32
                         In.append(_put_)
                         _line_ += 1
                     except SyntaxError:
-                        _error_ = msg_err().split("\n")
-                        del _error_[:10]
-                        del _error_[2]
-                        In.append(_put_)
-                        _line_ += 1
-                        error("\n".join(_error_)[1:])
+                        try:
+                            if callable(eval(_put_.split(" ")[0])):
+                                exec(f"{_put_.split(' ')[0]}({','.join(_put_.split(' ')[1:])})")
+                        except SyntaxError:
+                            _error_ = msg_err().split("\n")
+                            del _error_[:10]
+                            del _error_[2]
+                            In.append(_put_)
+                            _line_ += 1
+                            error("\n".join(_error_)[1:])
+                        except Exception as _error_:
+                            _error_ = msg_err().split("\n")
+                            del _error_[:10]
+                            del _error_[2]
+                            In.append(_put_)
+                            _line_ += 1
+                            error("\n".join(_error_)[1:])
                     except Exception as _error_:
                         _error_ = msg_err().split("\n")
                         del _error_[1]
