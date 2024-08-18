@@ -38,6 +38,8 @@ Python规范版本:3.11.1 on Windows win32
 
             if _put_ == "exit" or _put_ == "quit":
                 exit(0)
+            elif callable(eval(_put_.split(" ")[0])):
+                exec(f"{_put_.split(' ')[0]}({','.join(_put_.split(' ')[1:])})")
             elif _put_.startswith(_KeyWord_):
                 os.system(_put_[1:])
                 In.append(_put_)
@@ -46,7 +48,7 @@ Python规范版本:3.11.1 on Windows win32
                 try:
                     if _put_.endswith(" "):
                         continue
-                    print(get_help(eval(_put_[1:]), get=True))
+                    info(get_help(eval(_put_[1:]), get=True))
                 except SyntaxError:
                     error("?语法只支持变量,表达式和对象,而不是其他语句")
                 In.append(_put_)
@@ -111,33 +113,28 @@ Python规范版本:3.11.1 on Windows win32
             _line_ += 1
             error("\n".join(_error_))
 
-def run(files):
-    try:
-        for file in files:
-            with open(file, "r", encoding="utf-8") as f:
-                exec(f.read())
-        exit()
-    except Exception as error:
-        print(str(error))
-    else:
-        pass
-"""
 def shell(code="", In=In):
+    global get_help
+    _line_ = 0
     try:
-        _prompt_ = f"In [{str(_line_).rjust(2)}]>"
-        _put_ = input(_prompt_)
-
+        _put_ = code
         if _put_ == "exit" or _put_ == "quit":
             exit(0)
+        elif callable(eval(_put_.split(" ")[0])):
+                exec(f"{_put_.split(' ')[0]}({','.join(_put_.split(' ')[1:])})")
         elif _put_.startswith(_KeyWord_):
             os.system(_put_[1:])
             In.append(_put_)
             _line_ += 1
+        elif callable(_put_.split(" ")[0]):
+            exec(_put_.split(" ")[0] + "(" + (" ".join(_put_.split(" ")[1:])) + ")")
         elif _put_.startswith("?"):
             try:
-                print(get_help(eval(_put_[1:]), get=True))
+                if _put_.endswith(" "):
+                    return None
+                info(get_help(eval(_put_[1:]), get=True))
             except SyntaxError:
-                print("?语法只支持变量,表达式和对象,而不是其他语句")
+                error("?语法只支持变量,表达式和对象,而不是其他语句")
             In.append(_put_)
             _line_ += 1
         elif _put_.endswith(":"):
@@ -162,7 +159,7 @@ def shell(code="", In=In):
                 return None
             try:
                 _value_ = eval(_put_)
-                print(str(_value_))
+                user(str(_value_))
                 del _value_
                 In.append(_put_)
                 _line_ += 1
@@ -171,31 +168,59 @@ def shell(code="", In=In):
                     exec(_put_)
                     In.append(_put_)
                     _line_ += 1
+                except SyntaxError:
+                    _error_ = msg_err().split("\n")
+                    del _error_[:10]
+                    del _error_[2]
+                    In.append(_put_)
+                    _line_ += 1
+                    error("\n".join(_error_)[1:])
                 except Exception as _error_:
                     _error_ = msg_err().split("\n")
                     del _error_[1]
                     In.append(_put_)
                     _line_ += 1
-                    print("\n".join(_error_))
+                    error("\n".join(_error_))
             except Exception as _error_:
                 _error_ = msg_err().split("\n")
                 del _error_[1]
                 In.append(_put_)
                 _line_ += 1
-                print("\n".join(_error_))
+                error("\n".join(_error_))
                 In.append(_put_)
     except KeyboardInterrupt:
-        print("\n用户中断操作")
+        cls()
     except Exception as _error_:
         _error_ = msg_err().split("\n")
         del _error_[1]
         In.append(_put_)
         _line_ += 1
-        print("\n".join(_error_))
-"""
-if __name__ == "__main__":
+        error("\n".join(_error_))
+
+def run(files, shell=False):
+    try:
+        for file in files:
+            with open(file, "r", encoding="utf-8") as f:
+                if shell:
+                    for line in f.read().splitlines():
+                        shell(code=line)
+                else:
+                    exec(f.read())
+        exit()
+    except Exception as error:
+        print(str(error))
+    else:
+        pass
+
+def arg_main(args=argv):
     if len(argv) == 1:
         main()
     else:
-        run(argv[1:])
+        if not argv[1].startswith("-"):
+            run(argv[1:])
+        else:
+            if argv[1] == "-S":
+                run(argv[2:], shell=True)
 
+if __name__ == "__main__":
+    arg_main()
