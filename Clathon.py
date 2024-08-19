@@ -251,8 +251,20 @@ def arg_main(args=argv):
         if not argv[1].startswith("-"):
             run(argv[1:])
         else:
-            if argv[1] == "-S":
+            if argv[1] == "-S" or argv[1] == "--shell":
                 run(argv[2:], shell_mode=True)
+            elif argv[1] == "-V" or argv[1] == "--verison":
+                info("Clathon版本:" + _version_)
+                info("最后更新日期:" + _date_)
+                info("GNU LGPL v3")
+            elif argv[1] == "-L" or argv[1] == "--line":
+                exec(argv[2])
+            elif argv[1] == "-h" or argv[1] == "--help" or argv[1] == "-?":
+                info("用法Usage:")
+                info("-S/--shell 运行文件模拟在Shell中")
+                info("-V/--version 显示Clathon版本")
+                info("-L/--line 快捷运行单行代码")
+                info("-h/--help/-? 显示此帮助消息")
 
 if __name__ == "__main__":
     arg_main()
