@@ -24,6 +24,7 @@ import os
 In = []
 
 def main():
+    """Clathon Shell的主入口函数"""
     global _version_, _prompt_, _active_, _date_, _KeyWord_
     info(
         f"""Clathon版本 {_version_}({_date_}) 64 Bits
@@ -84,8 +85,14 @@ Python规范版本:3.11.1 on Windows win32
                         _line_ += 1
                     except SyntaxError:
                         try:
-                            if callable(eval(_put_.split(" ")[0])):
-                                exec(f"{_put_.split(' ')[0]}({','.join(_put_.split(' ')[1:])})")
+                            for char in """`~!@#$%^&*_+-={}[];:'\"|\\,<.>/?""":
+                                if char not in _put_.split(" ")[0]:
+                                    if callable(eval(_put_.split(" ")[0])):
+                                        exec(f"{_put_.split(' ')[0]}({','.join(_put_.split(' ')[1:])})")
+                                        In.append(_put_)
+                                        _line_ += 1
+                                        break
+                            del char
                         except SyntaxError:
                             _error_ = msg_err().split("\n")
                             del _error_[:10]
@@ -123,16 +130,13 @@ Python规范版本:3.11.1 on Windows win32
             error("\n".join(_error_))
 
 def shell(code="", In=In):
+    """用于在文件中模拟Clathon Shell的运行结果"""
     global get_help
     _line_ = 0
     try:
         _put_ = code
         if _put_ == "exit" or _put_ == "quit":
             exit(0)
-        elif callable(eval(_put_.split(" ")[0])):
-            exec(f"{_put_.split(' ')[0]}({','.join(_put_.split(' ')[1:])})")
-            In.append(_put_)
-            _line_ += 1
         elif _put_.startswith(_KeyWord_):
             os.system(_put_[1:])
             In.append(_put_)
@@ -178,12 +182,29 @@ def shell(code="", In=In):
                     In.append(_put_)
                     _line_ += 1
                 except SyntaxError:
-                    _error_ = msg_err().split("\n")
-                    del _error_[:10]
-                    del _error_[2]
-                    In.append(_put_)
-                    _line_ += 1
-                    error("\n".join(_error_)[1:])
+                    try:
+                        for char in """`~!@#$%^&*_+-={}[];:'\"|\\,<.>/?""":
+                            if char not in _put_.split(" ")[0]:
+                                if callable(eval(_put_.split(" ")[0])):
+                                    exec(f"{_put_.split(' ')[0]}({','.join(_put_.split(' ')[1:])})")
+                                    In.append(_put_)
+                                    _line_ += 1
+                                    break
+                        del char
+                    except SyntaxError:
+                        _error_ = msg_err().split("\n")
+                        del _error_[:10]
+                        del _error_[2]
+                        In.append(_put_)
+                        _line_ += 1
+                        error("\n".join(_error_)[1:])
+                    except Exception as _error_:
+                        _error_ = msg_err().split("\n")
+                        del _error_[:10]
+                        del _error_[2]
+                        In.append(_put_)
+                        _line_ += 1
+                        error("\n".join(_error_)[1:])
                 except Exception as _error_:
                     _error_ = msg_err().split("\n")
                     del _error_[1]
@@ -206,18 +227,20 @@ def shell(code="", In=In):
         _line_ += 1
         error("\n".join(_error_))
 
-def run(files, shell=False):
+def run(files, shell_mode=False):
     try:
         for file in files:
             with open(file, "r", encoding="utf-8") as f:
-                if shell:
+                if shell_mode:
                     for line in f.read().splitlines():
                         shell(code=line)
                 else:
                     exec(f.read())
         exit()
     except Exception as error:
-        print(str(error))
+        _error_ = msg_err().split("\n")
+        del _error_[1]
+        error("\n".join(_error_))
     else:
         pass
 
@@ -229,7 +252,7 @@ def arg_main(args=argv):
             run(argv[1:])
         else:
             if argv[1] == "-S":
-                run(argv[2:], shell=True)
+                run(argv[2:], shell_mode=True)
 
 if __name__ == "__main__":
     arg_main()
