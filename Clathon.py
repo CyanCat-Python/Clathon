@@ -8,8 +8,8 @@ Clathon 交互式环境，或使用 clathon <file>运行文件
 Gitee 项目仓库的 URL:https://gitee.com/HardyProjects/clathon
 仓库地址:git@gitee.com:HardyProjects/clathon.git
 作者： Cyan Wolf
-日期:2024/8/18
-版本: 1.20.7
+日期:2024/8/21
+版本: 1.20.8
 描述:Clathon 是用 CPython 编写的 Python 解释器。
 """
 
@@ -290,7 +290,7 @@ def arg_main(args=argv):
                         with open(argv[2], "rb") as put_file:
                             exec(pickle.load(put_file))
                     except FileNotFoundError:
-                        error(f"{argv[1]}文件未找到")
+                        error(f"{argv[2]}文件未找到")
                     except:
                         _error_ = msg_err().split("\n")
                         del _error_[1]

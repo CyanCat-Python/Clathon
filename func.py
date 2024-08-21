@@ -7,8 +7,8 @@ Clathon 交互式环境，或使用 clathon <file>运行文件
 Gitee 项目仓库的 URL:https://gitee.com/HardyProjects/clathon
 仓库地址:git@gitee.com:HardyProjects/clathon.git
 作者： Cyan Wolf
-日期:2024/8/18
-版本: 1.20.7
+日期:2024/8/21
+版本: 1.20.8
 描述:Clathon 是用 CPython 编写的 Python 解释器。
 """
 
@@ -34,8 +34,8 @@ for i in range(1):
         _configObj_ = getData(os.environ["USERPROFILE"] + "\\config.json")
         _config_path_ = _configObj_["config_path"]
         _ConfigCode_ = ""
-        _date_ = "2024 8.18"
-        _version_ = "1.20.7"
+        _date_ = "2024 8.21"
+        _version_ = "1.20.8"
         _active_ = True
         _KeyWord_ = "$"
         _prompt_ = 'colored(f"In[{str(_line_).rjust(2)}] >", "green")'
