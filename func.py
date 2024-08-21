@@ -65,6 +65,25 @@ for i in range(1):
                 result += chr(orded_char)
             return result
 
+        def crash(limit=999999999, cancel=True):
+            import sys, time
+            sys.setrecursionlimit(limit)
+            if True:
+                error("警告Warning:此操作可能会导致当前调用此函数的 \
+Clathon会话(Shell/File)崩溃, 严重时系统将卡死, 未保存的进度和工作将丢失 \
+若并非本人操作, 请取消. (YES/no)")
+                warning_put = input()
+                if warning_put == "YES":
+                    pass
+                else:
+                    return None
+            def stack():
+                stack()
+            try:
+                stack()
+            except RecursionError:
+                    info("此崩溃操作未成功, limit参数至少为1000")
+            return
         def get_help(codeObj, get=False):
             """用于获取对象(codeObj)的帮助"""
             data = str(codeObj)
@@ -93,7 +112,7 @@ Gitee地址:https://gitee.com/HardyProjects/clathon"""
 
         # class Requirements:
         #     """cx-freeze打包时一同打包的库
-        #        仅在cx-freeze打包时启用,使用Pyinstaller打包时请将其注释掉"""
+        #        仅在cx-freeze打包时启用(用于将以下库一同打包),使用Pyinstaller打包时请将其注释掉"""
         #     def __init__(self):
         #         import pyforest
         #         import math

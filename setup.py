@@ -16,7 +16,7 @@ Gitee 项目仓库的 URL:https://gitee.com/HardyProjects/clathon
 版本: 1.20.6
 描述:Clathon 是用 CPython 编写的 Python 解释器。""",
     author="Hardy",
-    py_modules=["clathon", "func"],
+    py_modules=["clathon", "func", "debugger"],
     author_email='2861205314@qq.com',
     license='LGPLv3',
     url='https://gitee.com/HardyProjects/clathon'

@@ -18,8 +18,8 @@ from func import _version_, _date_, _active_, _KeyWord_, _prompt_
 from pyautogui import press
 from pprint import pprint
 from traceback import format_exc as msg_err
+import pickle
 import os
-
 
 In = []
 
@@ -122,6 +122,8 @@ Python规范版本:3.11.1 on Windows win32
                     In.append(_put_)
         except KeyboardInterrupt:
             cls()
+        except EOFError:
+            exit(0)
         except Exception as _error_:
             _error_ = msg_err().split("\n")
             del _error_[1]
@@ -220,6 +222,8 @@ def shell(code="", In=In):
                 In.append(_put_)
     except KeyboardInterrupt:
         cls()
+    except EOFError:
+        exit(0)
     except Exception as _error_:
         _error_ = msg_err().split("\n")
         del _error_[1]
@@ -251,20 +255,58 @@ def arg_main(args=argv):
         if not argv[1].startswith("-"):
             run(argv[1:])
         else:
-            if argv[1] == "-S" or argv[1] == "--shell":
+            argv[1] = argv[1].lower()
+            if argv[1] == "-s" or argv[1] == "--shell":
                 run(argv[2:], shell_mode=True)
-            elif argv[1] == "-V" or argv[1] == "--verison":
+            elif argv[1] == "-v" or argv[1] == "--verison":
                 info("Clathon版本:" + _version_)
                 info("最后更新日期:" + _date_)
                 info("GNU LGPL v3")
-            elif argv[1] == "-L" or argv[1] == "--line":
-                exec(argv[2])
+            elif argv[1] == "-l" or argv[1] == "--line":
+                exec(" ".join(argv[2:]))
+            elif argv[1] == "-d" or argv[1] == "--dir":
+                cd(" ".join(argv[2:]))
+                main()
+            elif argv[1] == "-i" or argv[1] == "--import":
+                for module in argv[2:]:
+                    exec("import " + module)
+                main()
+            elif argv[1] == "-c" or argv[1] == "--complie":
+                if len(argv) < 4:
+                    error("缺少参数: <output-file>")
+                    info("用法:")
+                    info("  clathon -c <input-file> <output-file>")
+                else:
+                    with open(argv[2], "r", encoding="utf-8") as put_file:
+                        with open(argv[3], "wb") as out_file:
+                            pickle.dump(put_file.read(), out_file, 2)
+            elif argv[1] == "-y" or argv[1] == "--spy":
+                if len(argv) < 3:
+                    error("缺少参数: <input-file>")
+                    info("用法:")
+                    info("  clathon -y <input-file>")
+                else:
+                    try:
+                        with open(argv[2], "rb") as put_file:
+                            exec(pickle.load(put_file))
+                    except FileNotFoundError:
+                        error(f"{argv[1]}文件未找到")
+                    except:
+                        _error_ = msg_err().split("\n")
+                        del _error_[1]
+                        error("\n".join(_error_))
             elif argv[1] == "-h" or argv[1] == "--help" or argv[1] == "-?":
                 info("用法Usage:")
-                info("-S/--shell 运行文件模拟在Shell中")
-                info("-V/--version 显示Clathon版本")
-                info("-L/--line 快捷运行单行代码")
+                info("-s/--shell 运行文件模拟在Shell中")
+                info("-v/--version 显示Clathon版本")
+                info("-l/--line 快捷运行单行代码")
                 info("-h/--help/-? 显示此帮助消息")
+                info("-d/--dir 指定Clathon Shell打开的路径")
+                info("-i/--import 指定Clathon Shell打开时导入的库")
+                #info("-g/--config 指定Clathon Shell打开时运行的config")
+                info("-y/--pys 运行SPY文件")
+                info("-c/--complie 编译Clathon文件为SPY")
+                #info("-m/--module 运行/编译PYC文件")
 
 if __name__ == "__main__":
     arg_main()
