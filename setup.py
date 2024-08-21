@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name="clathon",
-    version="1.20.7",
+    version="1.20.8",
     description="""Clathon 是一个用 CPython 编写的 Python 解释器。它添加了很多功能(即编写
 Python 中的 Python，我被实现震撼了)
 设置和使用:
