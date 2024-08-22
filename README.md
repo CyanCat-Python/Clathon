@@ -10,9 +10,10 @@
 
 * 通过用户目录下的config.json指定config.py（Clathon启动时自动运行的脚本），同时也可以用config.json定义简单的数据、变量。
 * 加强的 Shell功能：
+
   * 快捷函数调用：
 
-    ```
+    ```python
     In[0]>print("Hello")
     Hello
     In[1]>print "Hello"
@@ -22,6 +23,7 @@
     For Example
     ```
   * Ctrl+C快捷中断清屏：
+
     ```
     In[0]>^C
     (Clear Screen)
@@ -46,14 +48,14 @@
     <built-in function print>
     ```
 
-    ```
-      1 #File example1.py
-      2 shell("print")
+    ```python
+    #File example1.py
+    shell("print")
     ```
 
-    ```
-      1 #File example2.py
-      2 print
+    ```python
+    #File example2.py
+    print
     ```
 
     ```
@@ -64,6 +66,19 @@
     C:\Users\Example\>_
     ```
 * Clathon的config功能也可以帮助开发者在交互式环境中频繁调试类或函数，而不必重新在交互式环境中定义或导入。
+* Clathon的-c参数与-y参数可以编译，运行spy文件：
+
+  ```python
+  #File example.py
+  print("Hello, Clathon!")
+  ```
+
+  ```
+  C:\Users\Example\>clathon -c example.py example.spy
+  C:\Users\Example\>clathon -y example.spy
+  Hello, Clathon!
+  C:\Users\Example\>_
+  ```
 
 ## 安装教程
 
