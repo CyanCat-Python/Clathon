@@ -99,26 +99,34 @@ Python规范版本:3.11.1 on Windows win32
                             del _error_[2]
                             In.append(_put_)
                             _line_ += 1
-                            error("\n".join(_error_)[1:])
+                            _error_ = "\n".join(_error_)[1:]
+                            _error_ = _error_.split("Traceback (most recent call last):")[-1]
+                            error(_error_)
                         except Exception as _error_:
                             _error_ = msg_err().split("\n")
                             del _error_[:10]
                             del _error_[2]
                             In.append(_put_)
                             _line_ += 1
-                            error("\n".join(_error_)[1:])
+                            _error_ = "\n".join(_error_)[1:]
+                            _error_ = _error_.split("Traceback (most recent call last):")[-1]
+                            error(_error_)
                     except Exception as _error_:
                         _error_ = msg_err().split("\n")
                         del _error_[1]
                         In.append(_put_)
                         _line_ += 1
-                        error("\n".join(_error_))
+                        _error_ = "\n".join(_error_)[1:]
+                        _error_ = _error_.split("Traceback (most recent call last):")[-1]
+                        error(_error_)
                 except Exception as _error_:
                     _error_ = msg_err().split("\n")
                     del _error_[1]
                     In.append(_put_)
                     _line_ += 1
-                    error("\n".join(_error_))
+                     _error_ = "\n".join(_error_)[1:]
+                    _error_ = _error_.split("Traceback (most recent call last):")[-1]
+                    error(_error_)
                     In.append(_put_)
         except KeyboardInterrupt:
             cls()
@@ -129,7 +137,9 @@ Python规范版本:3.11.1 on Windows win32
             del _error_[1]
             In.append(_put_)
             _line_ += 1
-            error("\n".join(_error_))
+            _error_ = "\n".join(_error_)[1:]
+            _error_ = _error_.split("Traceback (most recent call last):")[-1]
+            error(_error_)
 
 def shell(code="", In=In):
     """用于在文件中模拟Clathon Shell的运行结果"""
@@ -199,26 +209,34 @@ def shell(code="", In=In):
                         del _error_[2]
                         In.append(_put_)
                         _line_ += 1
-                        error("\n".join(_error_)[1:])
+                        _error_ = "\n".join(_error_)[1:]
+                        _error_ = _error_.split("Traceback (most recent call last):")[-1]
+                        error(_error_)
                     except Exception as _error_:
                         _error_ = msg_err().split("\n")
                         del _error_[:10]
                         del _error_[2]
                         In.append(_put_)
                         _line_ += 1
-                        error("\n".join(_error_)[1:])
+                        _error_ = "\n".join(_error_)[1:]
+                        _error_ = _error_.split("Traceback (most recent call last):")[-1]
+                        error(_error_)
                 except Exception as _error_:
                     _error_ = msg_err().split("\n")
                     del _error_[1]
                     In.append(_put_)
                     _line_ += 1
-                    error("\n".join(_error_))
+                    _error_ = "\n".join(_error_)[1:]
+                    _error_ = _error_.split("Traceback (most recent call last):")[-1]
+                    error(_error_)
             except Exception as _error_:
                 _error_ = msg_err().split("\n")
                 del _error_[1]
                 In.append(_put_)
                 _line_ += 1
-                error("\n".join(_error_))
+                _error_ = "\n".join(_error_)[1:]
+                 _error_ = _error_.split("Traceback (most recent call last):")[-1]
+                error(_error_)
                 In.append(_put_)
     except KeyboardInterrupt:
         cls()
@@ -229,7 +247,9 @@ def shell(code="", In=In):
         del _error_[1]
         In.append(_put_)
         _line_ += 1
-        error("\n".join(_error_))
+        _error_ = "\n".join(_error_)[1:]
+        _error_ = _error_.split("Traceback (most recent call last):")[-1]
+        error(_error_)
 
 def run(files, shell_mode=False):
     try:
